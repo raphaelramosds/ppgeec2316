@@ -2,7 +2,7 @@ def inicializar_matriz_resultado(a,b):
     n_a = len(a)
     n_b = len(b)
 
-    if n_a is not n_b:
+    if n_a != n_b:
         raise Exception("Matrizes devem ter o mesmo numero de linhas e colunas")
 
     n = n_b
