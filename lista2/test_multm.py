@@ -2,9 +2,13 @@ import random
 
 import pytest
 
-from multm import mult_matriz_quadradas
+from multm import multm_iterativo, multm_recursivo, multm_strassen
 
-METODOS = ["iterativo", "recursivo", "recursivo-strassen"]
+METODOS = {
+    "iterativo": multm_iterativo,
+    "recursivo": multm_recursivo,
+    "recursivo-strassen": multm_strassen,
+}
 
 
 def _mult_referencia(a, b):
@@ -30,7 +34,7 @@ def test_matriz_1x1(metodo):
     a = [[3.0]]
     b = [[4.0]]
 
-    assert mult_matriz_quadradas(a, b, metodo) == [[12.0]]
+    assert METODOS[metodo](a, b) == [[12.0]]
 
 
 @pytest.mark.parametrize("metodo", METODOS)
@@ -41,7 +45,7 @@ def test_matriz_2x2_valor_conhecido(metodo):
     # esperado calculado manualmente: A*B
     esperado = [[19.0, 22.0], [43.0, 50.0]]
 
-    assert _matrizes_iguais(mult_matriz_quadradas(a, b, metodo), esperado)
+    assert _matrizes_iguais(METODOS[metodo](a, b), esperado)
 
 
 @pytest.mark.parametrize("metodo", METODOS)
@@ -51,7 +55,7 @@ def test_contra_multiplicacao_referencia(metodo, n):
     b = _gerar_matriz(n, seed=n * 31 + 2)
 
     esperado = _mult_referencia(a, b)
-    resultado = mult_matriz_quadradas(a, b, metodo)
+    resultado = METODOS[metodo](a, b)
 
     assert _matrizes_iguais(resultado, esperado)
 
@@ -61,7 +65,7 @@ def test_metodos_concordam_entre_si(n):
     a = _gerar_matriz(n, seed=n * 5 + 3)
     b = _gerar_matriz(n, seed=n * 7 + 4)
 
-    resultados = [mult_matriz_quadradas(a, b, metodo) for metodo in METODOS]
+    resultados = [funcao(a, b) for funcao in METODOS.values()]
 
     for resultado in resultados[1:]:
         assert _matrizes_iguais(resultados[0], resultado)
@@ -73,7 +77,7 @@ def test_matriz_identidade(metodo):
     identidade = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
     a = _gerar_matriz(n, seed=99)
 
-    assert _matrizes_iguais(mult_matriz_quadradas(a, identidade, metodo), a)
+    assert _matrizes_iguais(METODOS[metodo](a, identidade), a)
 
 
 def test_dimensoes_incompativeis_lanca_excecao():
@@ -81,12 +85,4 @@ def test_dimensoes_incompativeis_lanca_excecao():
     b = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]
 
     with pytest.raises(Exception):
-        mult_matriz_quadradas(a, b, "iterativo")
-
-
-def test_metodo_invalido_lanca_excecao():
-    a = [[1.0]]
-    b = [[1.0]]
-
-    with pytest.raises(Exception):
-        mult_matriz_quadradas(a, b, "metodo-inexistente")
+        multm_iterativo(a, b)
