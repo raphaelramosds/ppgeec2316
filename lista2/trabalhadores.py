@@ -4,6 +4,7 @@ def permutar(a: list):
     n = len(a)
     
     for i in range(n):
+        # a cada elemento visitado, escolha outro aleatoriamente, e troque suas posicoes
         j = random.randint(i, n - 1)
         a[i], a[j] = a[j], a[i]
     return a
