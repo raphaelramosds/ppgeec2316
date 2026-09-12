@@ -1,54 +1,51 @@
-import random
-import time
+def permutar(a: list):
+    import random
 
-
-def permutar_aleatoriamente(a):
     n = len(a)
+    
     for i in range(n):
         j = random.randint(i, n - 1)
         a[i], a[j] = a[j], a[i]
     return a
 
 
-def particionar_sequencial(tarefas, k):
-    n = len(tarefas)
-    tamanho = n // k
+def distribuir(tarefas: list, k: int):
+    import time
 
-    particoes = [tarefas[i * tamanho:(i + 1) * tamanho] for i in range(k)]
-    resto = tarefas[k * tamanho:]
+    n = len(tarefas)
+
+    # dividimos as particoes usando a carga "exata"
+    tamanho_carga = n // k
+    particoes = [tarefas[i * tamanho_carga : (i + 1) * tamanho_carga] for i in range(k)]
+
+    # (k * tamanho_carga) eh a ultima posicao da ultima particao
+    resto = tarefas[k * tamanho_carga :]
     if resto:
+        # se ainda houver elementos a partir dessa posicao, adicionamos eles na ultima particao
         particoes[-1].extend(resto)
 
-    return particoes
+    # chamar trabalhadores
+    resultados = []
+    for particao in particoes:
+        inicio = time.perf_counter()
+        for carga_ms in particao:
+            time.sleep(carga_ms / 1000)
+        fim = time.perf_counter()
+        resultados.append(fim - inicio)
 
-
-def trabalhador(tarefas):
-    inicio = time.perf_counter()
-    for carga_ms in tarefas:
-        time.sleep(carga_ms / 1000)
-    return time.perf_counter() - inicio
-
-
-def executar_balanceador(tarefas, k):
-    particoes = particionar_sequencial(tarefas, k)
-    resultados = [trabalhador(particao) for particao in particoes]
-
-    return max(resultados), resultados
-
-
-def demonstrar_impacto_permutacao(tarefas, k, n_permutacoes=5):
-    carga_max, cargas = executar_balanceador(list(tarefas), k)
-    print(f"ordem original {tarefas} -> carga maxima: {carga_max * 1000:.1f} ms "
-          f"(cargas: {[round(c * 1000, 1) for c in cargas]})")
-
-    for i in range(n_permutacoes):
-        permutada = permutar_aleatoriamente(list(tarefas))
-        carga_max, cargas = executar_balanceador(permutada, k)
-        print(f"permutacao {i + 1} {permutada} -> carga maxima: {carga_max * 1000:.1f} ms "
-              f"(cargas: {[round(c * 1000, 1) for c in cargas]})")
+    # retornamos o tempo de execucao do trabalhador que foi sobrecarregado
+    return max(resultados)
 
 
 if __name__ == "__main__":
-    # cada tarefa eh dada em milissegundos 
-    tarefas = [100, 10, 10, 50, 50, 10, 10, 100]
-    demonstrar_impacto_permutacao(tarefas, k=4)
+    # cada tarefa eh dada em milissegundos
+    tarefas = [100, 90, 90, 80, 80, 10, 10, 100]
+    n_permutacoes = 5
+
+    # numero de trabalhadores
+    k = 5
+
+    for i in range(n_permutacoes):
+        permutada = permutar(list(tarefas))
+        carga_max = distribuir(permutada, k)
+        print(f"permutacao {i + 1} {permutada} -> carga maxima: {carga_max * 1000:.1f} ms ")
