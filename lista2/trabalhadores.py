@@ -38,6 +38,11 @@ def distribuir(tarefas: list, k: int):
 
 
 if __name__ == "__main__":
+    import random
+
+    # fixamos a semente para que as permutacoes sejam sempre as mesmas
+    random.seed(42)
+
     # cada tarefa eh dada em milissegundos
     tarefas = [100, 90, 90, 80, 80, 10, 10, 100]
     n_permutacoes = 5
