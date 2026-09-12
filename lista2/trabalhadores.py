@@ -45,10 +45,13 @@ if __name__ == "__main__":
 
     # cada tarefa eh dada em milissegundos
     tarefas = [100, 90, 90, 80, 80, 10, 10, 100]
-    n_permutacoes = 5
+    n_permutacoes = 10
 
     # numero de trabalhadores
     k = 3
+
+    carga_max = distribuir(tarefas, k)
+    print(f"lista original {tarefas} -> carga maxima: {carga_max * 1000:.1f} ms ")
 
     for i in range(n_permutacoes):
         permutada = permutar(list(tarefas))
