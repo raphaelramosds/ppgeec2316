@@ -1,5 +1,8 @@
 def insertion_sort(lista):
-    for i in range(1, len(lista)):
+    n = len(lista)
+    indices_lista = range(1, n)
+    
+    for i in indices_lista:
         chave = lista[i]
         j = i - 1
         while j >= 0 and lista[j] > chave:
