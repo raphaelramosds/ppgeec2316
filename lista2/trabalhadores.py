@@ -48,7 +48,7 @@ if __name__ == "__main__":
     n_permutacoes = 5
 
     # numero de trabalhadores
-    k = 5
+    k = 3
 
     for i in range(n_permutacoes):
         permutada = permutar(list(tarefas))
