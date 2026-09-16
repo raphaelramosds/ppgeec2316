@@ -5,6 +5,9 @@ from multm_helpers import (
     subtrair_matrizes,
 )
 
+# tamanho de bloco em que a recursao de Strassen para e passa a usar o laco triplo
+CORTE_PADRAO = 64
+
 def multm_iterativo(a,b):
     n, c = inicializar_matriz_resultado(a,b)
 
@@ -59,24 +62,24 @@ def multm_recursivo(a, b):
     _multm_recursivo(a, b, c, 0, 0, 0, 0, 0, 0, n)
     return c
 
-def multm_strassen(a, b):
+def multm_strassen(a, b, corte=CORTE_PADRAO):
     n = len(a)
 
-    # caso base: submatrizes 1x1
-    if n == 1:
-        return [[a[0][0] * b[0][0]]]
+    # caso base: bloco pequeno o bastante, multiplica pelo algoritmo convencional
+    if n <= corte:
+        return multm_iterativo(a, b)
 
     a11, a12, a21, a22 = dividir_submatrizes(a)
     b11, b12, b21, b22 = dividir_submatrizes(b)
 
     # 7 multiplicacoes recursivas (produtos de Strassen)
-    m1 = multm_strassen(somar_matrizes(a11, a22), somar_matrizes(b11, b22))
-    m2 = multm_strassen(somar_matrizes(a21, a22), b11)
-    m3 = multm_strassen(a11, subtrair_matrizes(b12, b22))
-    m4 = multm_strassen(a22, subtrair_matrizes(b21, b11))
-    m5 = multm_strassen(somar_matrizes(a11, a12), b22)
-    m6 = multm_strassen(subtrair_matrizes(a21, a11), somar_matrizes(b11, b12))
-    m7 = multm_strassen(subtrair_matrizes(a12, a22), somar_matrizes(b21, b22))
+    m1 = multm_strassen(somar_matrizes(a11, a22), somar_matrizes(b11, b22), corte)
+    m2 = multm_strassen(somar_matrizes(a21, a22), b11, corte)
+    m3 = multm_strassen(a11, subtrair_matrizes(b12, b22), corte)
+    m4 = multm_strassen(a22, subtrair_matrizes(b21, b11), corte)
+    m5 = multm_strassen(somar_matrizes(a11, a12), b22, corte)
+    m6 = multm_strassen(subtrair_matrizes(a21, a11), somar_matrizes(b11, b12), corte)
+    m7 = multm_strassen(subtrair_matrizes(a12, a22), somar_matrizes(b21, b22), corte)
 
     # combinacao dos produtos nos blocos de C
     c11 = somar_matrizes(subtrair_matrizes(somar_matrizes(m1, m4), m5), m7)
