@@ -21,18 +21,7 @@ def multm_iterativo(a,b):
 
     return c
 
-def _multm_recursivo(
-    a,
-    b,
-    c,
-    linha_a,
-    col_a,
-    linha_b,
-    col_b,
-    linha_c,
-    col_c,
-    n
-    ):
+def _multm_recursivo(a, b, c, linha_a, col_a, linha_b, col_b, linha_c, col_c, n):
 
     # caso base: submatrizes 1x1 (acumula o produto direto em C)
     if n == 1:
