@@ -10,6 +10,9 @@ def counting_sort(v):
             lowest = v[i]
 
     # Cria o array de contagem
+    # NOTE: o tamanho ser definido como highest - lowest eh uma otimizacao
+    # para que possamos descartar a frequencia dos elementos menores do que
+    # o menor elemento da lista.
     c = [0] * (highest - lowest + 1)
 
     # Preenche o array de contagem com a frequencia de cada elemento
