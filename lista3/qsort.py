@@ -14,19 +14,28 @@ def quick_sort_random(v, left, right):
         quick_sort_random(v, pivot_index + 1, right)
 
 
-# Sem randomizacao: o indice do pivo fica no fim da particao
+# o indice do pivo fica no fim da particao
 def partition(v, left, right):
+    # posicao final do pivo: comeca no inicio do array 
+    # ("avanca" sempre que um el menor que ele eh encontrado)
     new_pindex = left
+
     pivot = v[right]
     for i in range(left, right):
+        # avancamos new_pindex enquanto encontrarmos el menor que o pivo
         if v[i] < pivot:
             v[i], v[new_pindex] = v[new_pindex], v[i]
             new_pindex += 1
+
+    # posiciona pivo na posicao correta
     v[new_pindex], v[right] = v[right], v[new_pindex]
+
+    # neste ponto, os els menores que o pivo estao a sua esquerda
+    # e os maiores a sua direita
     return new_pindex
 
 
-# Com randomizacao: o indice do pivo e escolhido aleatoriamente
+# o indice do pivo eh escolhido aleatoriamente
 def partition_random(v, left, right):
 
     # Gera um indice aleatorio entre left e right
