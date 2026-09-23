@@ -13,11 +13,10 @@ def radix_sort(arr):
         counting_sort(arr, exp)
         exp *= 10
 
-
+# counting sort adaptado para ordenar os elementos com base no seus digitos menos significativo
+# esse digito eh calculado com base na potencia de dez em exp1 (1, 10, 100, 1000, ...)
 def counting_sort(arr, exp1):
-
     n = len(arr)
-
     output = [0] * (n)
 
     # cria o array de contagem
@@ -26,8 +25,11 @@ def counting_sort(arr, exp1):
 
     # registra a frequencia dos ultimos digitos de cada elemento do array de entrada
     for i in range(0, n):
+        # divisao inteira (//) para identificar a grandeza que estou ordenando
+        # ex: 523 e exp1= 10, entao estamos ordenando em relacao a 52
         index = arr[i] // exp1
         # N % 10 extrai o ultimo digito de N
+        # ex: o ultimo digito de 52 eh 52 mod 10 = 2
         count[index % 10] += 1
 
     # soma cumulativa sobre o array de contagem
