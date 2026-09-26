@@ -109,10 +109,11 @@ def fmm(n, sx, sy) -> list[list[Node]]:
         min_i = -1
         min_j = -1
 
-        # encontra node "considered" com menor tempo de chegada
-        # O(n^2)
+        # encontra node "considered" com menor tempo de chegada 
         for i in range(n):
             for j in range(n):
+                # OBS: no pior caso, se essa verificacao, que custa O(n^2), for feita para todos os M nodes da matriz
+                # teremos um custo computacional de O(M * n^2). Como M = n * n, entao a complexidade total eh O(n^4)
                 if u_grid[i][j].label == Label.CONSIDERED:
                     existem_considered = True
                     if u_grid[i][j].val < min_val:
