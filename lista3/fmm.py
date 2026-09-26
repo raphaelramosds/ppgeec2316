@@ -4,7 +4,6 @@ from dataclasses import dataclass
 
 INF = 1.0e16
 
-
 class Label(Enum):
     ACCEPTED = 1
     CONSIDERED = 2
@@ -68,20 +67,41 @@ def atualizar_vizinhos(i: int, j: int, grid: list[list[Node]], vel: list[list[fl
                 
                 grid[ni][nj].label = Label.CONSIDERED
 
-def main():
-    N = 10
+def matriz_tempos_chegada(grid: list[list[Node]]) -> list[list[float]]:
+    n = len(grid)
+    tempos = []
+    for i in range(n):
+        linha = []
+        for j in range(n):
+            linha.append(grid[i][j].val)
+        tempos.append(linha)
+    return tempos
 
-    # modelo de velocidade uniforma (0.3 km/s)
-    f = [[0.3 for _ in range(N)] for _ in range(N)]
+def fmm(n, sx, sy) -> list[list[Node]]:
+    """
+    *Fast Marching Method* executado em um grid n x n grid, a partir
+    de um modelo de velocidade constante. Cada node (i,j) do grid representa
+    o tempo U(i,j) de primeira chegada da onda
+
+    Parametros:
+
+    n: tamanho do grid
+    sx, sy: coordenadas da fonte (source)
+
+    Retorna:
+    
+    Matriz final com os tempos de chegada que resolvem a *Equacao Diferencia Eikonal*
+    """
+    # modelo de velocidade constante (0.3 km/s)
+    f = [[0.3 for _ in range(n)] for _ in range(n)]
 
     # matriz de tempos de primeira chegada da onda
-    u_grid = [[Node(label=Label.FAR, val=INF) for _ in range(N)] for _ in range(N)]
+    u_grid = [[Node(label=Label.FAR, val=INF) for _ in range(n)] for _ in range(n)]
 
     # definir posicao da fonte
-    centro = N // 2
-    u_grid[centro][centro].val = 0.0 # tempo de chegada nulo
-    u_grid[centro][centro].label = Label.ACCEPTED
-    atualizar_vizinhos(centro, centro, u_grid, f, N)
+    u_grid[sx][sy].val = 0.0 # tempo de chegada nulo
+    u_grid[sx][sy].label = Label.ACCEPTED
+    atualizar_vizinhos(sx, sy, u_grid, f, n)
 
     while True:
         existem_considered = False
@@ -91,8 +111,8 @@ def main():
 
         # encontra node "considered" com menor tempo de chegada
         # O(n^2)
-        for i in range(N):
-            for j in range(N):
+        for i in range(n):
+            for j in range(n):
                 if u_grid[i][j].label == Label.CONSIDERED:
                     existem_considered = True
                     if u_grid[i][j].val < min_val:
@@ -108,7 +128,6 @@ def main():
         u_grid[min_i][min_j].label = Label.ACCEPTED
 
         # atualizar os vizinhos do node recem aceito
-        atualizar_vizinhos(min_i, min_j, u_grid, f, N)
+        atualizar_vizinhos(min_i, min_j, u_grid, f, n)
 
-if __name__ == "__main__":
-    main()
+    return matriz_tempos_chegada(u_grid)
