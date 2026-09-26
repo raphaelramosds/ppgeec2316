@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from fmm import fmm, INF
 
-# TODO se optimize = True, entao chama a implementacao por priority queue
-def call_fmm(n, sx, sy, optimize=False) -> None:
+# TODO se heap = True, entao chama a implementacao por priority queue
+def call_fmm(n, sx, sy, heap=False) -> None:
     # chama algoritmo
     u_grid = fmm(n, sx, sy)
 
