@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from fmm import fmm, INF
+from fmm_pqueue import fmm_pqueue
 
 # TODO se heap = True, entao chama a implementacao por priority queue
 def call_fmm(n, sx, sy, heap=False) -> None:
     # chama algoritmo
-    u_grid = fmm(n, sx, sy)
+    u_grid = fmm(n, sx, sy) if not heap else fmm_pqueue(n, sx, sy)
 
     # parse dos nodes: fmm retorna uma unica matriz n x n de tempos
     np_u_grid = np.array(u_grid, dtype=float)
@@ -18,5 +19,3 @@ def call_fmm(n, sx, sy, heap=False) -> None:
     plt.colorbar(label="Tempo de Chegada (s)")
     plt.title("Mapa de Tempos de Chegada (FMM)")
     plt.show()
-
-    return np_u_grid
