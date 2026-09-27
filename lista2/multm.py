@@ -77,9 +77,8 @@ def multm_strassen(a, b, corte=CORTE_PADRAO):
     c22 = somar_matrizes(subtrair_matrizes(somar_matrizes(m1, m3), m2), m6)
 
     # juntar submatrizes c11, c12, c21, c22 na matriz resultado c
-    meio = len(c11)
-    n = meio * 2
-    c = [[0.0] * n for _ in range(n)]
+    meio = n // 2
+    c =[[0.0] * n for _ in range(n)]
 
     for i in range(meio):
         for j in range(meio):
