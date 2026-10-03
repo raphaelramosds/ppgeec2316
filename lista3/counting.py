@@ -34,3 +34,33 @@ def counting_sort(v):
     # Copia o array
     for i in range(0, len(v)):
         v[i] = s[i]
+
+
+def counting_sort_naive(v):
+    """Ordena uma lista de inteiros não negativos começando a contagem em zero."""
+
+    # Encontra o maior elemento para alocar também as frequências de zero até
+    # o menor elemento presente na entrada.
+    highest = v[0]
+    for i in range(1, len(v)):
+        if v[i] > highest:
+            highest = v[i]
+
+    lowest = 0
+    c = [0] * (highest - lowest + 1)
+
+    # Guarda a frequência de cada valor em sua posição correspondente.
+    for i in range(0, len(v)):
+        c[v[i] - lowest] += 1
+
+    # Soma cumulativa sobre o array de contagem.
+    for i in range(1, len(c)):
+        c[i] += c[i - 1]
+
+    s = [0] * len(v)
+    for i in range(0, len(v)):
+        s[c[v[i] - lowest] - 1] = v[i]
+        c[v[i] - lowest] -= 1
+
+    for i in range(0, len(v)):
+        v[i] = s[i]
