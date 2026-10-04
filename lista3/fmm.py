@@ -125,7 +125,8 @@ def fmm(n, sx, sy) -> list[list[Node]]:
         if not existem_considered:
             break
 
-        # marcar o menor node como aceito
+        # o node considered com menor tempo de chegada eh o que a onda vai preferir
+        # entao, marque ele como aceito
         u_grid[min_i][min_j].label = Label.ACCEPTED
 
         # atualizar os vizinhos do node recem aceito
