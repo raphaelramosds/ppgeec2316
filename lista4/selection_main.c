@@ -34,10 +34,10 @@ int main() {
     int repeticoes = 10;
 
     // TESTE 1: o median select tem maior constante, entao pode apresentar tempos de execucao maiores
-    executar_teste("TESTE 1: array aleatorio", gerar_aleatorio, tamanhos, num_tamanhos, repeticoes);
+    executar_teste("TESTE 1: arrays aleatorios", gerar_aleatorio, tamanhos, num_tamanhos, repeticoes);
 
     // TESTE 2: tenta forcar o pior caso do randomized select com um array ordenado de 1 a n
-    executar_teste("TESTE 2: array ordenado (1 a n)", gerar_ordenado, tamanhos, num_tamanhos, repeticoes);
+    executar_teste("TESTE 2: arrays ordenados", gerar_ordenado, tamanhos, num_tamanhos, repeticoes);
 
     return 0;
 }
