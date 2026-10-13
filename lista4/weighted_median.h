@@ -8,12 +8,12 @@
 typedef struct {
     double valor;
     double peso;
-} Elemento;
+} elemento;
 
 int compare(const void *a, const void *b) {
     // funcao de ordenacao customizada para ordenar um conjunto de estruturas
-    const Elemento *el1 = (const Elemento *)a;
-    const Elemento *el2 = (const Elemento *)b;
+    const elemento *el1 = (const elemento *)a;
+    const elemento *el2 = (const elemento *)b;
 
     // ordena em ordem crescente pelo valor
     if (el1->valor < el2->valor) return -1;
@@ -28,7 +28,7 @@ static inline double weighted_median(const double valores[], const double pesos[
     }
 
     // Criar lista de pares (valor, peso) alocada dinamicamente
-    Elemento *pares = (Elemento *)malloc(n * sizeof(Elemento));
+    elemento *pares = (elemento *)malloc(n * sizeof(elemento));
     if (pares == NULL) {
         fprintf(stderr, "Erro de alocacao de memoria.\n");
         exit(EXIT_FAILURE);
@@ -42,7 +42,7 @@ static inline double weighted_median(const double valores[], const double pesos[
     // ordena por valor porque queremos garantir que estamos acumulando
     // os pesos comecando pelo elementos menores, seguindo a definicao da
     // mediana ponderada (xi < xk)
-    qsort(pares, n, sizeof(Elemento), compare);
+    qsort(pares, n, sizeof(elemento), compare);
 
     double w_acumulado = 0.0;
     double mediana = pares[0].valor;
