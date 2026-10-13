@@ -34,7 +34,7 @@ int main() {
     int num_tamanhos = sizeof(tamanhos) / sizeof(tamanhos[0]);
     int repeticoes = 50;
 
-    printf("%-12s | %-15s | %-18s \n", "Tamanho (n)", "Simultaneo (ms)", "Nao-Simultaneo (ms)");
+    printf("%-12s   %-15s   %-18s \n", "Tamanho (n)", "Simultaneo (ms)", "Nao-Simultaneo (ms)");
     // printf("-----------------------------------------------------------------\n");
 
     for (int t = 0; t < num_tamanhos; t++) {
@@ -55,7 +55,7 @@ int main() {
         double tempo_sim = medir(v, n, repeticoes, 1) * 1000; // ms
         double tempo_nao_sim = medir(v, n, repeticoes, 0) * 1000; // ms
 
-        printf("%-12d | %-15.6f | %-18.6f\n", n, tempo_sim, tempo_nao_sim);
+        printf("%-12d   %-15.6f   %-18.6f\n", n, tempo_sim, tempo_nao_sim);
 
         free(v); // Libera a memoria alocada
     }

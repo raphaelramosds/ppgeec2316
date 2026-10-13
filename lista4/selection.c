@@ -124,7 +124,7 @@ int median_select(int A[], int p, int r, int i) {
     g = (r - p + 1)/5;
 
     for (j = p; j <= p + g - 1; j++) {
-        int* G = (int*) calloc(sizeof(int), 5);
+        int* G = (int*) calloc(5, sizeof(int));
         for (int n = 0; n < 5; n++) {
             G[n] = A[j + n*g];
         }
