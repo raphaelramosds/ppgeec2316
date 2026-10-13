@@ -40,7 +40,7 @@ static inline double weighted_median(const double valores[], const double pesos[
     }
 
     // ordena por valor porque queremos garantir que estamos acumulando
-    // os pesos comecando pelo elementos menores, seguindo a definicao da
+    // os pesos comecando pelos elementos menores, seguindo a definicao da
     // mediana ponderada (xi < xk)
     qsort(pares, n, sizeof(elemento), compare);
 
@@ -48,10 +48,14 @@ static inline double weighted_median(const double valores[], const double pesos[
     double mediana = pares[0].valor;
 
     // percorre acumulando os pesos
-    for (int i = 0; i < n; i++) {
-        w_acumulado += pares[i].peso;
+    for (int k = 0; k < n; k++) {
+        w_acumulado += pares[k].peso;
         if (w_acumulado >= 0.5) {
-            mediana = pares[i].valor;
+            mediana = pares[k].valor;
+            // como w_acumulado >= 0.5 ate xk = pares[i] (incluso)
+            // a soma dos pesos apos xk eh menor que 0.5, pq 1-w_acumulado <= 0.5 
+            // como a soma dos pesos apos xk e antes de xk eh menor que 0.5
+            // o elemento pares[i] eh a mediana ponderada, portanto, termine
             break;
         }
     }
