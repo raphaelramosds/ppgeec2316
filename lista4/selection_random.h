@@ -39,10 +39,10 @@ int randomized_select(int A[], int p, int r, int i) {
         // calculamos um rank da posicao desejada (o "i") entao retorne
         return A[q];
     } else if (i < k) {
-        // calculamos um rank maior do que o desejado, entao procure na particao esquerda
+        // calculamos um rank maior do que o desejado, entao procure APENAS na particao esquerda
         return randomized_select(A, p, q - 1, i);
     } else {
-        // calculamos um rank menor do que o desejado, entao procure na particao direita
+        // calculamos um rank menor do que o desejado, entao procure APENAS na particao direita
         // NOTE: achar (i-k)-esimo menor porque perdemos a referencia da particao esquerda
         return randomized_select(A, q + 1, r, i - k);
     }
