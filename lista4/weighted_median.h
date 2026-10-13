@@ -54,7 +54,7 @@ static inline double weighted_median(const double valores[], const double pesos[
             mediana = pares[k].valor;
             // como w_acumulado >= 0.5 ate xk = pares[i] (incluso)
             // a soma dos pesos apos xk eh menor que 0.5, pq 1-w_acumulado <= 0.5 
-            // como a soma dos pesos apos xk e antes de xk eh menor que 0.5
+            // NOTE: como a soma dos pesos apos xk e antes de xk eh menor que 0.5
             // o elemento pares[i] eh a mediana ponderada, portanto, termine
             break;
         }
