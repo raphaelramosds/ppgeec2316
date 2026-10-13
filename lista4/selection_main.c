@@ -1,7 +1,7 @@
 #include "selection.h"
 #include "utils.h"
 
-// Roda o teste para cada tamanho, gerando o array com a funcao "gerar"
+// executa o teste para cada tamanho, gerando o array com a funcao "gerar"
 void executar_teste(const char *titulo, void (*gerar)(int[], int), const int tamanhos[], int num_tamanhos, int repeticoes) {
     printf("%s\n", titulo);
     printf("%-12s   %-20s   %-20s\n", "Tamanho (n)", "Randomized (ms)", "Median (ms)");
