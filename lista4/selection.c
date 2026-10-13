@@ -67,9 +67,9 @@ int randomized_select(int A[], int p, int r, int i) {
     }
 }
 
-// NOTE: diferentemente do partition, em que o pivo eh sempre o ultimo elemento,
-// partition_around recebe como parametro quem vai ser o pivo
 int partition_around(int A[], int p, int r, int x) {
+    // NOTE: diferentemente do partition, em que o pivo eh sempre o ultimo elemento,
+    // partition_around recebe como parametro quem vai ser o pivo
     int pivot_index = -1;
     
     // encontrar a posicao real do valor x no subvetor

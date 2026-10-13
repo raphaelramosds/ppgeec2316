@@ -18,12 +18,12 @@ int median_select(int A[], int p, int r, int i);
 
 
 // Executa o algoritmo "repeticoes" vezes sobre copias de A e retorna o tempo medio de uma chamada
-// NOTE: os algoritmos modificam o vetor, entao cada repeticao recebe uma copia nova
 static inline double medir_tempo(const int A[], int n, int i, int algoritmo, int repeticoes) {
     int *copia = (int*) malloc(n * sizeof(int));
     double total = 0.0;
-
+    
     for (int rep = 0; rep < repeticoes; rep++) {
+        // NOTE: os algoritmos modificam o vetor, entao cada repeticao recebe uma copia nova
         memcpy(copia, A, n * sizeof(int));
 
         clock_t inicio = clock();
