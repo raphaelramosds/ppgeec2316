@@ -1,13 +1,22 @@
 #include "selection.h"
 #include "utils.h"
 
-int partition(int A[], int p, int r) {
+int randomized_partition(int A[], int p, int r) {
+    // escolhe uma posicao entre p e r aleatoriamente
+    int i = p + rand() % (r - p + 1);
+
+    // coloca o pivo no final da particao
+    // NOTE: se ele for o maior/menor elemento da particao, a divisao fica desbalanceada
+    // atingindo, o pior caso do algoritmo
+    swap(&A[i], &A[r]);
+
     // pivo
     int x = A[r];
 
     // representa o ultimo indice da particao esquerda
-    int i = p - 1;
+    i = p - 1;
 
+    // posiciona elementos menores que o pivo a esquerda e maiores a direita
     for (int j = p; j < r; j++) {
         // troca se achar um elemento menor que o pivo
         // para posiciona-lo na particao esquerda (a particao com os menores elementos)
@@ -22,19 +31,6 @@ int partition(int A[], int p, int r) {
     swap(&A[i + 1], &A[r]);
 
     return i + 1;
-}
-
-int randomized_partition(int A[], int p, int r) {
-    // escolhe uma posicao entre p e r aleatoriamente
-    int i = p + rand() % (r - p + 1);
-
-    // coloca o pivo no final da particao
-    // NOTE: se ele for o maior/menor elemento da particao, a divisao fica desbalanceada
-    // atingindo, o pior caso do algoritmo
-    swap(&A[i], &A[r]);
-
-    // posiciona elementos menores que o pivo a esquerda e maiores a direita
-    return partition(A, p, r);
 }
 
 // seleciona o i-esimo menor valor em A[p:r]
@@ -68,7 +64,7 @@ int randomized_select(int A[], int p, int r, int i) {
 }
 
 int partition_around(int A[], int p, int r, int x) {
-    // NOTE: diferentemente do partition, em que o pivo eh sempre o ultimo elemento,
+    // NOTE: diferentemente do randomized_partition, em que o pivo eh sempre o ultimo elemento,
     // partition_around recebe como parametro quem vai ser o pivo
     int pivot_index = -1;
     
