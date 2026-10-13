@@ -1,23 +1,29 @@
 # Definicoes do compilador e flags
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -O1
-TARGET = minmax_main postoffice_main selection_test selection_main
+TARGETS = selection_main selection_test minmax_main postoffice_main
 
-# Regra padrao (executada ao digitar apenas 'make')
-all: $(TARGET)
+# Regra padrao (executada ao digitar apenas 'make'): compila todos os executaveis
+all: $(TARGETS)
 
-# Regra de compilacao do executavel a partir do arquivo fonte
-$(TARGET): $(TARGET)_main.c
-	$(CC) $(CFLAGS) main.c -o $(TARGET)
+selection_main: selection_main.c selection.c selection.h utils.h
+	$(CC) $(CFLAGS) selection_main.c selection.c -o $@
 
-selection-test: selection_test.c selection.c selection.h utils.h
-	$(CC) $(CFLAGS) selection_test.c selection.c -o selection_test
+selection_test: selection_test.c selection.c selection.h utils.h
+	$(CC) $(CFLAGS) selection_test.c selection.c -o $@
 
-selection-main: selection_main.c selection.c selection.h utils.h
-	$(CC) $(CFLAGS) selection_main.c selection.c -o selection_main
+minmax_main: minmax_main.c minmax.h
+	$(CC) $(CFLAGS) $< -o $@
 
-# Regra para limpar arquivos gerados (executavel)
+postoffice_main: postoffice_main.c weighted_median.h
+	$(CC) $(CFLAGS) $< -o $@
+
+# Atalhos com hifen mantidos por compatibilidade
+selection-main: selection_main
+selection-test: selection_test
+
+# Regra para limpar arquivos gerados (executaveis)
 clean:
-	rm -f $(TARGET) selection_test
+	rm -f $(TARGETS)
 
-.PHONY: all clean run selection
+.PHONY: all clean selection-main selection-test
