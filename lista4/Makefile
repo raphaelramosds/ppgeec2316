@@ -7,7 +7,7 @@ TARGET = minmax
 all: $(TARGET)
 
 # Regra de compilacao do executavel a partir do arquivo fonte
-$(TARGET): main.c
+$(TARGET): $(TARGET)_main.c
 	$(CC) $(CFLAGS) main.c -o $(TARGET)
 
 # Regra para limpar arquivos gerados (executavel)
