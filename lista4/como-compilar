@@ -1,0 +1,7 @@
+#!bin/bash
+
+# compilar minmax_main
+make minmax_main
+
+# passar flag de compilacao especifica
+OPT=-O2 make minmax_main

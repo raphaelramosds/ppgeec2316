@@ -6,15 +6,24 @@ double medir(const double *a, int n, int repeticoes, int simultaneo) {
     clock_t inicio, fim;
     double menor_tempo = -1.0;
 
+    // force o compilador a reler o ponteiro a cada repeticao, impedindo que a chamada seja movida para fora do laco
+    const double *volatile vetor = a;
+    
+    // evita eliminacao de codigo morto (forca o uso dos resultados de minmax_simultaneo e minmax_nao_simultaneo)
+    volatile double sink_min, sink_max;
+
     for (int r = 0; r < repeticoes; r++) {
         inicio = clock();
-        
+
+        resultado res;
         if (simultaneo) {
-            minmax_simultaneo(a, n);
+            res = minmax_simultaneo(vetor, n);
         } else {
-            minmax_nao_simultaneo(a, n);
+            res = minmax_nao_simultaneo(vetor, n);
         }
-        
+        sink_min = res.min_val;
+        sink_max = res.max_val;
+
         fim = clock();
         double tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
 
@@ -22,6 +31,8 @@ double medir(const double *a, int n, int repeticoes, int simultaneo) {
             menor_tempo = tempo_gasto;
         }
     }
+    (void)sink_min;
+    (void)sink_max;
 
     return menor_tempo;
 }

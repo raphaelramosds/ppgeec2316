@@ -1,22 +1,23 @@
 # Definicoes do compilador e flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -O1
+CFLAGS = -Wall -Wextra -std=c99 
 TARGETS = selection_main selection_test minmax_main postoffice_main
+OPT=-O2
 
 # Regra padrao (executada ao digitar apenas 'make'): compila todos os executaveis
 all: $(TARGETS)
 
 selection_main: selection_main.c selection.c selection.h utils.h
-	$(CC) $(CFLAGS) selection_main.c selection.c -o $@
+	$(CC) $(CFLAGS) $(OPT) selection_main.c selection.c -o $@
 
 selection_test: selection_test.c selection.c selection.h utils.h
-	$(CC) $(CFLAGS) selection_test.c selection.c -o $@
+	$(CC) $(CFLAGS) $(OPT) selection_test.c selection.c -o $@
 
 minmax_main: minmax_main.c minmax.h
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $(OPT) $< -o $@
 
 postoffice_main: postoffice_main.c weighted_median.h
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $(OPT) $< -o $@
 
 # Atalhos com hifen mantidos por compatibilidade
 selection-main: selection_main
