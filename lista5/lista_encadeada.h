@@ -21,4 +21,7 @@ void lista_inserir(lista_encadeada *L, int x);
 // LIST-SEARCH: busca linear, O(n) no pior caso. Retorna o no ou NULL
 no_lista *lista_buscar(const lista_encadeada *L, int k);
 
+// LIST-DELETE: retira o no x da lista em O(1). NOTE: nao libera x, isso fica a cargo de quem chama
+void lista_remover(lista_encadeada *L, no_lista *x);
+
 #endif

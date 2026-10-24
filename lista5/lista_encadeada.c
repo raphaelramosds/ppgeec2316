@@ -43,3 +43,15 @@ no_lista *lista_buscar(const lista_encadeada *L, int k) {
     }
     return x;
 }
+
+void lista_remover(lista_encadeada *L, no_lista *x) {
+    // como a lista eh duplamente encadeada, basta religar o anterior e o proximo de x
+    if (x->prev != NULL) {
+        x->prev->next = x->next;
+    } else {
+        L->head = x->next;
+    }
+    if (x->next != NULL) {
+        x->next->prev = x->prev;
+    }
+}

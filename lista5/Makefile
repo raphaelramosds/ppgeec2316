@@ -1,7 +1,7 @@
 # Definicoes do compilador e flags
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
-TARGETS = estruturas_main estruturas_test
+TARGETS = estruturas_main
 OPT=-O1
 
 SRCS = array_ordenado.c lista_encadeada.c rubro_negra.c
@@ -12,9 +12,6 @@ all: $(TARGETS)
 
 estruturas_main: estruturas_main.c $(SRCS) $(HDRS)
 	$(CC) $(CFLAGS) $(OPT) estruturas_main.c $(SRCS) -o $@
-
-estruturas_test: estruturas_test.c $(SRCS) $(HDRS)
-	$(CC) $(CFLAGS) $(OPT) estruturas_test.c $(SRCS) -o $@
 
 # Regra para limpar arquivos gerados (executaveis)
 clean:
