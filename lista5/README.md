@@ -12,8 +12,24 @@ n          | array_inserir        lista_inserir        rn_inserir           | ar
 
 14. Implemente tabelas hash com encadeamento e com endereçamento aberto. Realize experimentos para demonstrar numericamente as vantagens e desvantagens de cada caso, considerando as operações de inserção, busca e remoção.
 
-```
+NOTE: na remoção, considere que
+- A comparação apenas é justa se encad_remover buscar o nó da lista ligada que possui a chave que se quer remover. Assim, ambas fazem uma busca depois uma operação O(1)
+- O encadeamento não depende de uma operação de realocar a tabela para suportar mais elementos, porque simplesmente podemos encadeá-los.
 
+```
+PLANO: comparar encadeamento com enderecamento aberto (probe linear)
+
+busca (test_hash_search.c)
+- vamos testar a busca para diferentes fatores de carga em uma tabela com m = 1024 slots fixos, de forma que n = alpha * m
+- alpha in {0.1 .. 0.99, 1.0} (+ 2, 5 só encad), com sucesso x sem sucesso com m: 1024 (encad) e 1021 ou 1031 (aberto, primo)
+
+insercao (test_hash_insert.c)
+- forcar colisoes
+- alpha in {0.1, 0.5, 0.9, 0.99} com m = 2^16 + 1 (aberto) e 2^16 (encad)
+
+remocao (test_hash_remove.c)
+- apenas remover: ambas tem o mesmo desempenho
+- ciclos remove+insere em alpha=0.5: busca sem sucesso ao longo dos ciclos. Aqui, remove-se varias vezes e depois buscar: o enderecamento aberto pode apresentar uma queda de perfomance, porque os DELETED vao ser visitados
 ```
 
 15. Compare implementações de tabelas hash com hashing duplo e probing linear. Analise e justifique os resultados dos seus experimentos.
