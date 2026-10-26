@@ -47,9 +47,15 @@ no_lista *encad_buscar(const hash_encadeamento *H, int k) {
     return lista_buscar(&H->T[h(H, k)], k);
 }
 
-void encad_remover(hash_encadeamento *H, no_lista *x) {
-    // LIST-DELETE(T[h(x.key)], x)
-    lista_remover(&H->T[h(H, x->chave)], x);
+int encad_remover(hash_encadeamento *H, int k) {
+    // LIST-SEARCH(T[h(k)], k) seguido de LIST-DELETE(T[h(k)], x)
+    int j = h(H, k);
+    no_lista *x = lista_buscar(&H->T[j], k);
+    if (x == NULL) {
+        return -1;
+    }
+    lista_remover(&H->T[j], x);
     free(x);
     H->n--;
+    return j;
 }

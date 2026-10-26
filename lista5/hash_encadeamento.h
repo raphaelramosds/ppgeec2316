@@ -21,7 +21,9 @@ void encad_inserir(hash_encadeamento *H, int k);
 // CHAINED-HASH-SEARCH: Theta(1 + alpha) no caso medio. Retorna o no ou NULL
 no_lista *encad_buscar(const hash_encadeamento *H, int k);
 
-// CHAINED-HASH-DELETE: O(1), recebe o no x (e nao a chave) e o libera
-void encad_remover(hash_encadeamento *H, no_lista *x);
+// Busca k na lista T[h(k)] e remove seu no com CHAINED-HASH-DELETE (O(1)), liberando-o.
+// Theta(1 + alpha) no caso medio, dominado pela busca. Retorna a posicao h(k) ou -1 se k nao
+// estiver na tabela
+int encad_remover(hash_encadeamento *H, int k);
 
 #endif
