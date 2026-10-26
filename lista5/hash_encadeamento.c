@@ -19,6 +19,7 @@ hash_encadeamento *encad_criar(int l) {
 }
 
 void encad_liberar(hash_encadeamento *H) {
+    // liberar memoria de todos os slots da tabela
     for (int j = 0; j < H->m; j++) {
         no_lista *x = H->T[j].head;
         while (x != NULL) {

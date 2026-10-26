@@ -38,7 +38,9 @@ static inline uint32_t h2(const hash_aberto *H, int k) {
 // proxima posicao da sequencia de sondagem
 static inline uint32_t proxima_sondagem(const hash_aberto *H, uint32_t q, uint32_t passo) {
     q += passo;
-    return q >= (uint32_t) H->m ? q - H->m : q;
+    return q >= (uint32_t) H->m 
+        ? q - H->m // alcancou final da tabela, volte para o inicio
+        : q;
 }
 
 int aberto_inserir(hash_aberto *H, int k) {
