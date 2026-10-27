@@ -1,7 +1,7 @@
 # Definicoes do compilador e flags
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
-TARGETS = estruturas_main test_hash_search test_hash_insert test_hash_remove test_hash_remove_insert
+TARGETS = estruturas_main test_hash_search test_hash_insert test_hash_remove test_hash_remove_insert test_hash_sondagem_tempo test_hash_sondagem_colisoes
 OPT=-O1
 
 SRCS = array_ordenado.c lista_encadeada.c rubro_negra.c

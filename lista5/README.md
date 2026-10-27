@@ -35,3 +35,17 @@ ciclos (test_hash_remove_insert.c)
 ```
 
 15. Compare implementações de tabelas hash com hashing duplo e probing linear. Analise e justifique os resultados dos seus experimentos.
+
+```
+Tempo (ns) com tabela grande: a vantagem da sondagem linear
+
+- Com m = 1021, a tabela ocupa 4 KB e cabe inteira na cache L1, então o tempo apenas acompanha as sondagens. 
+- a sondagem linear acessa posições vizinhas na mesma linha de cache, enquanto o hashing duplo salta para posições aleatórias.
+
+Chaves que colidem em h1 (pior caso)
+
+- Inserir chaves da forma k = j·m + c (todas com o mesmo h1).
+- Com sondagem linear elas formam um único agrupamento e a i-ésima inserção custa i sondagens, ou seja, Θ(n²) no total.
+- Com hashing duplo, h2(k) = 1 + k mod (m−1) varia de chave para chave e as sequências de sondagem divergem. 
+- Isso mostra que o hashing duplo elimina também o agrupamento secundário: chaves com o mesmo h1 deixam de seguir a mesma sequência.
+```
