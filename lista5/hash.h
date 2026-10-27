@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 
+// contador global de sondagens usado nos experimentos (definido em hash.c):
+// - enderecamento aberto: posicoes da tabela examinadas (inclusive a vazia que encerra a busca)
+// - encadeamento: nos da lista examinados
+extern long sondagens;
+
 // constante sugerida por Knuth para o metodo da multiplicacao (a = A * 2^32, A ~ (sqrt(5) - 1) / 2)
 #define HASH_A 2654435769u
 

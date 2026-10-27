@@ -36,6 +36,20 @@ static inline int h(const hash_encadeamento *H, int k) {
     return multiply_shift((uint32_t) k, HASH_A, H->l);
 }
 
+// LIST-SEARCH(L, k), contando os nos examinados
+// NOTE: reimplementa lista_buscar para atualizar o contador de sondagens
+static no_lista *buscar_na_lista(const lista_encadeada *L, int k) {
+    no_lista *x = L->head;
+    while (x != NULL) {
+        sondagens++;
+        if (x->chave == k) {
+            break;
+        }
+        x = x->next;
+    }
+    return x;
+}
+
 void encad_inserir(hash_encadeamento *H, int k) {
     // LIST-PREPEND(T[h(k)], x)
     lista_inserir(&H->T[h(H, k)], k);
@@ -44,13 +58,13 @@ void encad_inserir(hash_encadeamento *H, int k) {
 
 no_lista *encad_buscar(const hash_encadeamento *H, int k) {
     // LIST-SEARCH(T[h(k)], k): percorre apenas a lista da posicao h(k), de tamanho medio alpha = n/m
-    return lista_buscar(&H->T[h(H, k)], k);
+    return buscar_na_lista(&H->T[h(H, k)], k);
 }
 
 int encad_remover(hash_encadeamento *H, int k) {
     // LIST-SEARCH(T[h(k)], k) seguido de LIST-DELETE(T[h(k)], x)
     int j = h(H, k);
-    no_lista *x = lista_buscar(&H->T[j], k);
+    no_lista *x = buscar_na_lista(&H->T[j], k);
     if (x == NULL) {
         return -1;
     }

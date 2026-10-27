@@ -5,3 +5,7 @@ selection_main
 selection_test
 postoffice_main
 estruturas_main
+test_hash_search
+test_hash_insert
+test_hash_remove
+test_hash_remove_insert

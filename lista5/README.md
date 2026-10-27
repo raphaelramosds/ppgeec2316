@@ -29,6 +29,8 @@ insercao (test_hash_insert.c)
 
 remocao (test_hash_remove.c)
 - apenas remover: ambas tem o mesmo desempenho
+
+ciclos (test_hash_remove_insert.c)
 - ciclos remove+insere em alpha=0.5: busca sem sucesso ao longo dos ciclos. Aqui, remove-se varias vezes e depois buscar: o enderecamento aberto pode apresentar uma queda de perfomance, porque os DELETED vao ser visitados
 ```
 

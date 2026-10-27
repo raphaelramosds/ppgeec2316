@@ -1,4 +1,5 @@
 #include "hash_aberto.h"
+#include "hash.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,6 +49,7 @@ int aberto_inserir(hash_aberto *H, int k) {
     uint32_t q = h1(H, k), passo = H->prob_linear ? 1 : h2(H, k);
 
     for (int i = 0; i < H->m; i++) {
+        sondagens++;
         // a primeira posicao livre (vazia ou removida) na sequencia de sondagem recebe k
         if (H->T[q] == NIL || H->T[q] == DELETED) {
             H->T[q] = k;
@@ -64,8 +66,12 @@ int aberto_buscar(const hash_aberto *H, int k) {
     uint32_t q = h1(H, k), passo = H->prob_linear ? 1 : h2(H, k);
 
     // percorre a mesma sequencia de sondagem usada quando k foi inserida
-    // NOTE: ao encontrar NIL, k nao pode estar mais adiante, pois teria sido inserida ali
-    for (int i = 0; i < H->m && H->T[q] != NIL; i++) {
+    for (int i = 0; i < H->m; i++) {
+        sondagens++;
+        // NOTE: ao encontrar NIL, k nao pode estar mais adiante, pois teria sido inserida ali
+        if (H->T[q] == NIL) {
+            return -1;
+        }
         if (H->T[q] == k) {
             return (int) q;
         }
