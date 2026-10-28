@@ -60,7 +60,7 @@ int main() {
 
     printf("*_inserir: tempo total para inserir n chaves aleatorias (ms)\n");
     printf("*_buscar: tempo medio de uma busca sobre %d chaves (us)\n\n", NUM_BUSCAS);
-    printf("%-10s | %-20s %-20s %-20s | %-20s %-20s %-20s\n", "n",
+    printf("%-8s | %-13s %-13s %-13s | %-13s %-13s %-13s\n", "n",
            "array_inserir", "lista_inserir", "rn_inserir",
            "array_buscar", "lista_buscar", "rn_buscar");
 
@@ -106,7 +106,7 @@ int main() {
             }
         }
 
-        printf("%-10d | %-20.3f %-20.3f %-20.3f | %-20.4f %-20.4f %-20.4f\n", n,
+        printf("%-8d | %-13.3f %-13.3f %-13.3f | %-13.4f %-13.4f %-13.4f\n", n,
                ins[ARRAY], ins[LISTA], ins[ARVORE], busca[ARRAY], busca[LISTA], busca[ARVORE]);
 
         free(A);

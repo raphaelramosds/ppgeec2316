@@ -18,7 +18,7 @@ int main() {
     double alphas[] = {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99};
     int num_alphas = sizeof(alphas) / sizeof(alphas[0]);
 
-    // [estrategia][0: com sucesso, 1: sem sucesso], estrategia 0: linear, 1: duplo
+    // [alpha][estrategia][0: com sucesso, 1: sem sucesso], estrategia 0: linear, 1: duplo
     medida res[num_alphas][2][2];
 
     for (int t = 0; t < num_alphas; t++) {
@@ -32,8 +32,10 @@ int main() {
         }
 
         for (int r = 0; r < REPETICOES; r++) {
-            // as mesmas chaves (pares) nas duas tabelas e as mesmas chaves ausentes (impares)
+            // chaves pares
             int *A = gerar_chaves(n, 0);
+            
+            // chaves impares
             int *B = gerar_chaves(NUM_FALHAS, 1);
 
             // amostra das presentes para a busca com sucesso
@@ -68,23 +70,24 @@ int main() {
         }
     }
 
-    printf("m = %d (%.1f MB); media de %d tabelas por alpha\n",
-           M_ABERTO, M_ABERTO * sizeof(int) / 1048576.0, REPETICOES);
-    printf("sond: posicoes examinadas por busca; ns: tempo por busca; ns/sond: tempo por sondagem\n");
-
-    const char *titulos[] = {"busca com sucesso", "busca sem sucesso"};
-    for (int s = 0; s < 2; s++) {
-        printf("\n%s\n\n", titulos[s]);
-        printf("%-6s | %-10s %-10s %-10s | %-10s %-10s %-10s\n", "alpha",
-               "lin_sond", "lin_ns", "lin_ns/so", "dup_sond", "dup_ns", "dup_ns/so");
-        for (int t = 0; t < num_alphas; t++) {
-            printf("%-6.2f |", alphas[t]);
+    printf("Para m = %d (%.1f MB)\n\n", M_ABERTO, M_ABERTO * sizeof(int) / 1048576.0);
+    printf("Tempo por sondagem (tempo medio por busca/sondagens medias por busca) (ns)\n\n");
+    printf("%-6s | %-12s %-12s | %-12s %-12s\n", "alpha",
+           "linear_ok", "duplo_ok", "linear_falha", "duplo_falha");
+    for (int t = 0; t < num_alphas; t++) {
+        printf("%-6.2f |", alphas[t]);
+        for (int s = 0; s < 2; s++) {
             for (int e = 0; e < 2; e++) {
                 medida x = res[t][e][s];
-                printf(" %-10.2f %-10.1f %-10.2f%s", x.sondagens, x.ns, x.ns / x.sondagens,
-                       e == 0 ? " |" : "\n");
+                printf(" %-12.2f", x.ns / x.sondagens);
             }
+            printf(s == 0 ? " |" : "\n");
         }
     }
+
+    printf("\nlinear: hashing por prob linear\n");
+    printf("duplo: hashing duplo\n");
+    printf("ok: busca com sucesso\n");
+    printf("falha: busca sem sucesso\n");
     return 0;
 }

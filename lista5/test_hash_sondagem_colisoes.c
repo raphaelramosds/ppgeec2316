@@ -29,10 +29,10 @@ int main() {
         A[j] = j * M_ABERTO + C;
     }
 
-    printf("m = %d; chaves k_j = j * m + %d (todas com h1 = %d)\n", M_ABERTO, C, C);
-    printf("sond: posicoes examinadas por operacao; ns: tempo por operacao\n\n");
-    printf("%-6s %-6s | %-10s %-10s %-10s %-10s | %-10s %-10s %-10s %-10s\n", "n", "alpha",
-           "lin_ins", "lin_ns", "lin_busca", "lin_ns", "dup_ins", "dup_ns", "dup_busca", "dup_ns");
+    printf("Para m = %d e chaves k_j = j * m + %d (todas com h1 = %d)\n\n", M_ABERTO, C, C);
+    printf("Numero de Sondagens e Tempo gasto para Insercoes (ns)\n\n");
+    printf("%-6s %-6s | %-12s %-12s | %-12s %-12s\n", "n", "alpha",
+           "linear_sond", "linear_ns", "duplo_sond", "duplo_ns");
 
     for (int t = 0; t < num_ns; t++) {
         int n = ns[t];
@@ -50,12 +50,15 @@ int main() {
             medida ins = {(double) sondagens / n, (agora_ns() - inicio) / n};
             sink = ok;
 
-            medida busca = buscar_aberto(H, A, n); // todas com sucesso
-            printf(" %-10.2f %-10.1f %-10.2f %-10.1f%s", ins.sondagens, ins.ns,
-                   busca.sondagens, busca.ns, e == 0 ? " |" : "\n");
+            printf(" %-12.2f %-12.1f%s", ins.sondagens, ins.ns, e == 0 ? " |" : "\n");
             aberto_liberar(H);
         }
     }
+
+    printf("\nsond: numero de sondagens (posicoes examinadas por insercao)\n");
+    printf("ns: tempo por insercao (nanossegundos)\n");
+    printf("linear: hashing por prob linear\n");
+    printf("duplo: hashing duplo\n");
 
     free(A);
     return 0;
