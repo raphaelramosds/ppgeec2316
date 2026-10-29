@@ -4,8 +4,8 @@
 #include "hash_encadeamento.h"
 
 // Busca com e sem sucesso para diferentes fatores de carga alpha = n/m, com m fixo
-#define L_ENCAD 10      // encadeamento: m = 2^10 = 1024
-#define M_ABERTO 1021   // enderecamento aberto: primo mais proximo de 1024
+#define L_ENCAD 16      // encadeamento: m = 2^16 = 65536
+#define M_ABERTO 65537  // enderecamento aberto: 2^16 + 1 (primo)
 #define PROB_LINEAR 1   // 1: sondagem linear; 0: hashing duplo
 
 #define REPETICOES 100  // tabelas construidas (com chaves novas) para cada alpha
@@ -14,13 +14,13 @@
 int main() {
     rng_semear((uint64_t) time(NULL));
 
-    double alphas[] = {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1.0, 2.0, 5.0};
+    double alphas[] = {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99};
     int num_alphas = sizeof(alphas) / sizeof(alphas[0]);
     int m_encad = 1 << L_ENCAD;
     const char *aberto = PROB_LINEAR ? "linear" : "duplo";
 
-    // [0]: com sucesso, [1]: sem sucesso
-    medida encad[num_alphas][2], abert[num_alphas][2];
+    // sondagens medias por busca; [0]: com sucesso, [1]: sem sucesso
+    double encad[num_alphas][2], abert[num_alphas][2];
 
     for (int t = 0; t < num_alphas; t++) {
         double a = alphas[t];
@@ -29,7 +29,7 @@ int main() {
         int usa_aberto = a <= 1.0; // o enderecamento aberto nao comporta n > m
 
         for (int s = 0; s < 2; s++) {
-            encad[t][s] = abert[t][s] = (medida) {0, 0};
+            encad[t][s] = abert[t][s] = 0;
         }
 
         for (int r = 0; r < REPETICOES; r++) {
@@ -42,10 +42,8 @@ int main() {
                 encad_inserir(He, A[i]);
             }
             medida ok = buscar_encad(He, A, n_encad), falha = buscar_encad(He, B, NUM_FALHAS);
-            encad[t][0].sondagens += ok.sondagens / REPETICOES;
-            encad[t][0].ns += ok.ns / REPETICOES;
-            encad[t][1].sondagens += falha.sondagens / REPETICOES;
-            encad[t][1].ns += falha.ns / REPETICOES;
+            encad[t][0] += ok.sondagens / REPETICOES;
+            encad[t][1] += falha.sondagens / REPETICOES;
             encad_liberar(He);
 
             if (usa_aberto) {
@@ -55,10 +53,8 @@ int main() {
                 }
                 ok = buscar_aberto(Ha, A, n_aberto);
                 falha = buscar_aberto(Ha, B, NUM_FALHAS);
-                abert[t][0].sondagens += ok.sondagens / REPETICOES;
-                abert[t][0].ns += ok.ns / REPETICOES;
-                abert[t][1].sondagens += falha.sondagens / REPETICOES;
-                abert[t][1].ns += falha.ns / REPETICOES;
+                abert[t][0] += ok.sondagens / REPETICOES;
+                abert[t][1] += falha.sondagens / REPETICOES;
                 aberto_liberar(Ha);
             }
 
@@ -73,22 +69,9 @@ int main() {
     printf("%-6s | %-12s %-12s | %-12s %-12s\n", "alpha",
            "encad_ok", "encad_falha", "aberto_ok", "aberto_falha");
     for (int t = 0; t < num_alphas; t++) {
-        printf("%-6.2f | %-12.2f %-12.2f | ", alphas[t],
-               encad[t][0].sondagens, encad[t][1].sondagens);
+        printf("%-6.2f | %-12.2f %-12.2f | ", alphas[t], encad[t][0], encad[t][1]);
         if (alphas[t] <= 1.0) {
-            printf("%-12.2f %-12.2f\n", abert[t][0].sondagens, abert[t][1].sondagens);
-        } else {
-            printf("%-12s %-12s\n", "n > m", "n > m");
-        }
-    }
-
-    printf("\ntempo medio por busca (ns)\n\n");
-    printf("%-6s | %-12s %-12s | %-12s %-12s\n", "alpha",
-           "encad_ok", "encad_falha", "aberto_ok", "aberto_falha");
-    for (int t = 0; t < num_alphas; t++) {
-        printf("%-6.2f | %-12.1f %-12.1f | ", alphas[t], encad[t][0].ns, encad[t][1].ns);
-        if (alphas[t] <= 1.0) {
-            printf("%-12.1f %-12.1f\n", abert[t][0].ns, abert[t][1].ns);
+            printf("%-12.2f %-12.2f\n", abert[t][0], abert[t][1]);
         } else {
             printf("%-12s %-12s\n", "n > m", "n > m");
         }

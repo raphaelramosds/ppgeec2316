@@ -3,7 +3,7 @@
 #include "hash_aberto.h"
 #include "hash_encadeamento.h"
 
-// Custo de remover chaves presentes para diferentes fatores de carga
+// Sondagens para remover chaves presentes para diferentes fatores de carga
 // (ciclos de remove + insere estao em test_hash_remove_insert.c)
 // NOTE: encad_remover e aberto_remover recebem a chave, logo ambas fazem uma busca seguida de
 // uma operacao O(1) (religar a lista / marcar DELETED)
@@ -16,22 +16,22 @@
 int main() {
     rng_semear((uint64_t) time(NULL));
 
-    double alphas[] = {0.1, 0.5, 0.9, 0.99, 1.0, 2.0, 5.0};
+    double alphas[] = {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99};
     int num_alphas = sizeof(alphas) / sizeof(alphas[0]);
     int m_encad = 1 << L_ENCAD;
 
     printf("remocao de 10%% das chaves presentes (escolhidas ao acaso)\n");
-    printf("m = %d (encadeamento), %d (aberto, %s); media de %d tabelas por alpha\n\n",
+    printf("m = %d (encadeamento), %d (aberto, %s); media de %d tabelas por alpha\n",
            m_encad, M_ABERTO, PROB_LINEAR ? "linear" : "duplo", REPETICOES);
-    printf("%-6s | %-16s %-16s | %-16s %-16s\n", "alpha",
-           "encad_sondagens", "encad_ns", "aberto_sondagens", "aberto_ns");
+    printf("sondagens: nos examinados (encadeamento) / posicoes examinadas (aberto)\n\n");
+    printf("%-6s | %-16s | %-16s\n", "alpha", "encad_sondagens", "aberto_sondagens");
 
     for (int t = 0; t < num_alphas; t++) {
         double a = alphas[t];
         int n_encad = (int) (a * m_encad);
         int n_aberto = (int) (a * M_ABERTO);
         int usa_aberto = a <= 1.0;
-        medida encad = {0, 0}, abert = {0, 0};
+        double encad = 0, abert = 0; // sondagens medias por remocao
 
         for (int r = 0; r < REPETICOES; r++) {
             int n_max = n_encad > n_aberto ? n_encad : n_aberto;
@@ -52,14 +52,11 @@ int main() {
             }
             embaralhar(R, n_encad);
             int q = n_encad / 10;
-            long ok = 0;
             sondagens = 0;
-            double inicio = agora_ns();
             for (int i = 0; i < q; i++) {
-                ok += encad_remover(He, R[i]) != -1;
+                encad_remover(He, R[i]);
             }
-            encad.ns += (agora_ns() - inicio) / q / REPETICOES;
-            encad.sondagens += (double) sondagens / q / REPETICOES;
+            encad += (double) sondagens / q / REPETICOES;
             encad_liberar(He);
 
             if (usa_aberto) {
@@ -71,25 +68,22 @@ int main() {
                 embaralhar(R, n_aberto);
                 q = n_aberto / 10;
                 sondagens = 0;
-                inicio = agora_ns();
                 for (int i = 0; i < q; i++) {
-                    ok += aberto_remover(Ha, R[i]) != -1;
+                    aberto_remover(Ha, R[i]);
                 }
-                abert.ns += (agora_ns() - inicio) / q / REPETICOES;
-                abert.sondagens += (double) sondagens / q / REPETICOES;
+                abert += (double) sondagens / q / REPETICOES;
                 aberto_liberar(Ha);
             }
 
-            sink = ok;
             free(A);
             free(R);
         }
 
-        printf("%-6.2f | %-16.2f %-16.1f | ", a, encad.sondagens, encad.ns);
+        printf("%-6.2f | %-16.2f | ", a, encad);
         if (usa_aberto) {
-            printf("%-16.2f %-16.1f\n", abert.sondagens, abert.ns);
+            printf("%-16.2f\n", abert);
         } else {
-            printf("%-16s %-16s\n", "n > m", "n > m");
+            printf("%-16s\n", "n > m");
         }
     }
     return 0;
