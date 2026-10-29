@@ -31,7 +31,8 @@ static inline uint32_t h1(const hash_aberto *H, int k) {
     return (uint32_t) k % H->m;
 }
 
-// passo da sequencia de sondagem: 1 <= h2(k) <= m - 1, logo primo com m (que eh primo)
+// passo da sequencia de sondagem: 1 <= h2(k) <= m - 1
+// NOTE: m-1 eh primo
 static inline uint32_t h2(const hash_aberto *H, int k) {
     return 1 + (uint32_t) k % (H->m - 1);
 }
