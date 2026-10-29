@@ -26,7 +26,6 @@ void lista_inserir(lista_encadeada *L, int k) {
     }
     x->chave = k;
 
-    // LIST-PREPEND(L, x)
     x->next = L->head;
     x->prev = NULL;
     if (L->head != NULL) {

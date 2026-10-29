@@ -16,7 +16,7 @@ typedef struct no_rn {
 // NOTE: assim como no livro, todas as folhas e o pai da raiz apontam para a sentinela T.nil
 typedef struct {
     no_rn *root;
-    no_rn *nil;
+    no_rn *nil; // ao inves de criar varios nos folhas como NILL, apontamos para este sentinela
 } arvore_rn;
 
 arvore_rn *rn_criar(void);
