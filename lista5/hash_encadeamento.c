@@ -33,6 +33,8 @@ void encad_liberar(hash_encadeamento *H) {
 }
 
 static inline int h(const hash_encadeamento *H, int k) {
+    // constante sugerida por Knuth para o metodo da multiplicacao (a = A * 2^32, A ~ (sqrt(5) - 1) / 2)
+    const uint32_t HASH_A = 2654435769u;
     return multiply_shift((uint32_t) k, HASH_A, H->l);
 }
 

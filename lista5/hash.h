@@ -8,9 +8,6 @@
 // - encadeamento: nos da lista examinados
 extern long sondagens;
 
-// constante sugerida por Knuth para o metodo da multiplicacao (a = A * 2^32, A ~ (sqrt(5) - 1) / 2)
-#define HASH_A 2654435769u
-
 // Metodo multiply-shift (CLRS secao 11.3, equacao 11.2), com w = 32 e m = 2^l:
 //     h_a(k) = (k * a mod 2^w) >> (w - l)
 // isto eh, os l bits mais significativos da metade inferior do produto k * a
