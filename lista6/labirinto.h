@@ -27,4 +27,7 @@ void labirinto_abrir(labirinto *L, int u, int v);
 int labirinto_ler_argumentos(int argc, char *argv[], int *linhas, int *colunas, unsigned *semente,
                              int *desenhar);
 
+// instante atual em segundos (relogio monotonico), para medir intervalos de tempo
+double labirinto_tempo(void);
+
 #endif

@@ -27,7 +27,9 @@ int main(int argc, char *argv[]) {
     int tam;
 
     // peso total da arvore
+    double inicio = labirinto_tempo();
     double peso = mst_kruskal(G, A, &tam);
+    double tempo = labirinto_tempo() - inicio;
 
     // cada aresta da MST vira uma passagem aberta
     for (int i = 0; i < tam; i++) {
@@ -36,6 +38,7 @@ int main(int argc, char *argv[]) {
 
     printf("Labirinto %dx%d (Kruskal, semente %u)\n", linhas, colunas, semente);
     printf("passagens abertas: %d de %d paredes, peso da MST: %g\n", tam, L->n_paredes, peso);
+    printf("tempo de execucao (mst_kruskal): %.3f ms\n", tempo * 1e3);
 
     free(A);
     grafo_liberar(G);

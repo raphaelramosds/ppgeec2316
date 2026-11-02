@@ -27,7 +27,9 @@ int main(int argc, char *argv[]) {
     }
 
     // peso total da arvore
+    double inicio = labirinto_tempo();
     double peso = mst_prim(G, 0, pi);
+    double tempo = labirinto_tempo() - inicio;
 
     // cada aresta {pi[v], v} da MST vira uma passagem aberta
     int abertas = 0;
@@ -40,6 +42,7 @@ int main(int argc, char *argv[]) {
 
     printf("Labirinto %dx%d (Prim, semente %u)\n", linhas, colunas, semente);
     printf("passagens abertas: %d de %d paredes, peso da MST: %g\n", abertas, L->n_paredes, peso);
+    printf("tempo de execucao (mst_prim): %.3f ms\n", tempo * 1e3);
 
     free(pi);
     grafo_liberar(G);
