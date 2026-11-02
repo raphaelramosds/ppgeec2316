@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-grafo *grafo_criar(int n, int dirigido) {
+grafo *grafo_criar(int n, tipo_grafo dirigido) {
     grafo *G = (grafo*) malloc(sizeof(grafo));
     G->n_vertices = n;
     G->n_arestas = 0;
@@ -50,7 +50,7 @@ static void inserir(grafo *G, int u, int v, double w) {
 
 void grafo_adicionar_aresta(grafo *G, int u, int v, double w) {
     inserir(G, u, v, w);
-    if (!G->dirigido && u != v) {
+    if (G->dirigido == NAO_DIRIGIDO && u != v) {
         // se nao for dirigido, coloque na lista de adjacencia de v tambem 
         inserir(G, v, u, w);
     }

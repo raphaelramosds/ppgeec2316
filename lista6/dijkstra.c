@@ -40,6 +40,7 @@ void dijkstra(const grafo *G, int s, double *d, int *pi) {
     heap_liberar(Q);
 }
 
+// imprime vertices seguindo a lista de predecessores (pi)
 void imprimir_caminho(const grafo *G, const int *pi, int s, int v) {
     if (v == s) {
         printf("%d", s);
