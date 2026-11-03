@@ -1,7 +1,7 @@
 # Definicoes do compilador e flags
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
-TARGETS = ospf_main maze_kruskal_main maze_prim_main
+TARGETS = ospf_main maze_kruskal_main maze_prim_main dag_main
 OPT=-O1
 
 SRCS = grafo.c heap.c conjuntos.c dfs.c mst.c dijkstra.c labirinto.c
@@ -18,6 +18,9 @@ maze_kruskal_main: maze_kruskal_main.c $(SRCS) $(HDRS)
 
 maze_prim_main: maze_prim_main.c $(SRCS) $(HDRS)
 	$(CC) $(CFLAGS) $(OPT) maze_prim_main.c $(SRCS) -o $@ -lm
+
+dag_main: dag_main.c $(SRCS) $(HDRS)
+	$(CC) $(CFLAGS) $(OPT) dag_main.c $(SRCS) -o $@ -lm
 
 # Regra para limpar arquivos gerados (executaveis)
 clean:
