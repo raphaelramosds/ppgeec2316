@@ -43,11 +43,13 @@ void dijkstra(const grafo *G, int s, double *d, int *pi) {
 // imprime vertices seguindo a lista de predecessores (pi)
 void imprimir_caminho(const grafo *G, const int *pi, int s, int v) {
     if (v == s) {
+        // chegamos na fonte, imprima sua chave
         printf("%d", s);
     } else if (pi[v] == -1) {
         printf("nao existe caminho de %d a %d", s, v);
     } else {
         imprimir_caminho(G, pi, s, pi[v]);
+        // comece a imprimir os predecessores, comecando da fonte
         printf(" -> %d", v);
     }
 }

@@ -15,7 +15,7 @@ typedef struct {
     int banda_mbps; // largura de banda do link
 } link_ospf;
 
-// LSA de um roteador (lista de adjacencia de um roteador)
+// LSA (List Statement Advertisements) de um roteador (lista de adjacencia)
 typedef struct {
     // vertice
     int roteador;
