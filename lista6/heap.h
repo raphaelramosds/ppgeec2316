@@ -3,7 +3,7 @@
 
 typedef struct {
     int *A;              // A[i]: valor do node na posicao i do heap
-    int *heap_index;     // heap_index[v]: posicao de v em A, ou -1 se v nao estiver no heap
+    int *heap_index;     // heap_index[v]: posicao de v em A, ou -1 se v ausente
     int tamanho;         // numero de elementos no heap
     const double *prioridades; // prioridades[v]: prioridade de v
 } heap_min;
