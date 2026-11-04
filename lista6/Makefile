@@ -1,10 +1,10 @@
 # Definicoes do compilador e flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -Wall -Wextra -std=c99 -D_POSIX_C_SOURCE=199309L
 TARGETS = ospf_main maze_main dag_main rede_neural_main
 OPT=-O1
 
-SRCS = grafo.c heap.c conjuntos.c dfs.c mst.c dijkstra.c labirinto.c rede_neural.c tempo.c
+SRCS = grafo.c heap.c conjuntos.c dfs.c mst.c dijkstra.c labirinto.c rede_neural.c
 HDRS = grafo.h heap.h conjuntos.h dfs.h mst.h dijkstra.h labirinto.h rede_neural.h tempo.h
 
 # Regra padrao (executada ao digitar apenas 'make'): compila todos os executaveis
