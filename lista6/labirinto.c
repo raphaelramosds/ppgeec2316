@@ -1,11 +1,6 @@
-// clock_gettime/CLOCK_MONOTONIC nao fazem parte do C99 puro
-#define _POSIX_C_SOURCE 199309L
-
 #include "labirinto.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 // monta labirinto M x N, em que M = linhas e N = colunas
 // grid 3 x 3 possui 6 grades verticais e 6 horizontais
@@ -98,50 +93,4 @@ static int indice_parede(const labirinto *L, int u, int v) {
 
 void labirinto_abrir(labirinto *L, int u, int v) {
     L->paredes[indice_parede(L, u, v)].aberta = 1;
-}
-
-static int ler_inteiro_positivo(const char *s, int *x) {
-    char *fim;
-    // converte string para inteiro
-    long v = strtol(s, &fim, 10);
-    if (*s == '\0' || *fim != '\0' || v < 1 || v > 10000) {
-        // overflow/underflow
-        return -1;
-    }
-    *x = (int) v;
-    return 0;
-}
-
-int labirinto_ler_argumentos(int argc, char *argv[], int *linhas, int *colunas, unsigned *semente) {
-    int dim[2], n_dim = 0;
-    *semente = (unsigned) time(NULL);
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-s") == 0) {
-            // -s semente: pode aparecer em qualquer posicao
-            char *fim;
-            if (i + 1 >= argc) {
-                return -1;
-            }
-            *semente = (unsigned) strtoul(argv[++i], &fim, 10);
-            if (*argv[i] == '\0' || *fim != '\0') {
-                return -1;
-            }
-        } else if (n_dim < 2 && ler_inteiro_positivo(argv[i], &dim[n_dim]) == 0) {
-            n_dim++;
-        } else {
-            return -1;
-        }
-    }
-    if (n_dim == 0) {
-        return -1;
-    }
-    *linhas = dim[0];
-    *colunas = (n_dim == 2) ? dim[1] : dim[0]; // so as linhas: grade quadrada
-    return 0;
-}
-double labirinto_tempo(void) {
-    // relogio monotonico: nao sofre ajustes do relogio do sistema
-    struct timespec t;
-    clock_gettime(CLOCK_MONOTONIC, &t);
-    return t.tv_sec + t.tv_nsec * 1e-9;
 }

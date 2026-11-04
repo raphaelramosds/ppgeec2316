@@ -1,8 +1,9 @@
 // gera um labirinto com a MST da grade de celulas, usando Kruskal e Prim (a partir da celula (0, 0))
 // sobre o mesmo grafo, e compara os tempos de execucao
-// uso: ./maze_main linhas [colunas] [-s semente]
+// uso: ./maze_main (linhas, colunas e semente sao lidas da entrada padrao)
 #include "labirinto.h"
 #include "mst.h"
+#include "tempo.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,13 +14,21 @@ static void fechar_paredes(labirinto *L) {
     }
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
     int linhas, colunas;
     unsigned semente;
-    if (labirinto_ler_argumentos(argc, argv, &linhas, &colunas, &semente) != 0) {
-        fprintf(stderr, "uso: %s linhas [colunas] [-s semente]\n", argv[0]);
+    int lidos = 0;
+    printf("Linhas: ");
+    lidos += scanf("%d", &linhas);
+    printf("Colunas: ");
+    lidos += scanf("%d", &colunas);
+    printf("Semente: ");
+    lidos += scanf("%u", &semente);
+    if (lidos != 3 || linhas < 1 || colunas < 1) {
+        fprintf(stderr, "Entrada invalida: linhas e colunas devem ser inteiros >= 1.\n");
         return 1;
     }
+    printf("\n");
     srand(semente);
 
     // grade com todas as paredes fechadas e pesos aleatorios (compartilhada pelos dois algoritmos)
@@ -38,9 +47,9 @@ int main(int argc, char *argv[]) {
 
     // Kruskal
     int tam;
-    double inicio = labirinto_tempo();
+    double inicio = tempo_atual();
     double peso_kruskal = mst_kruskal(G, A, &tam);
-    double tempo_kruskal = labirinto_tempo() - inicio;
+    double tempo_kruskal = tempo_atual() - inicio;
 
     // cada aresta da MST vira uma passagem aberta
     for (int i = 0; i < tam; i++) {
@@ -54,9 +63,9 @@ int main(int argc, char *argv[]) {
     // Prim
     fechar_paredes(L);
 
-    inicio = labirinto_tempo();
+    inicio = tempo_atual();
     double peso_prim = mst_prim(G, 0, pi);
-    double tempo_prim = labirinto_tempo() - inicio;
+    double tempo_prim = tempo_atual() - inicio;
 
     // cada aresta {pi[v], v} da MST vira uma passagem aberta
     int abertas = 0;
