@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="352" viewBox="0 0 840 352" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="840" height="352" fill="#ffffff"/>
+
+<!-- indices u -->
+<g font-size="12" text-anchor="middle" fill="#6b7280">
+<text x="140" y="32">0</text>
+<text x="220" y="32">1</text>
+<text x="300" y="32">2</text>
+<text x="380" y="32">3</text>
+<text x="460" y="32">4</text>
+<text x="540" y="32">5</text>
+<text x="620" y="32">6</text>
+<text x="700" y="32">7</text>
+</g>
+
+<!-- linha NOME[u]: azul = valor, ambar = operacao -->
+<g stroke-width="1.4">
+<rect x="100" y="40" width="80" height="30" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="180" y="40" width="80" height="30" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="260" y="40" width="80" height="30" fill="#fef3c7" stroke="#d97706"/>
+<rect x="340" y="40" width="80" height="30" fill="#fef3c7" stroke="#d97706"/>
+<rect x="420" y="40" width="80" height="30" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="500" y="40" width="80" height="30" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="580" y="40" width="80" height="30" fill="#fef3c7" stroke="#d97706"/>
+<rect x="660" y="40" width="80" height="30" fill="#dbeafe" stroke="#2563eb"/>
+</g>
+<!-- linha R->f[u] -->
+<g fill="#ffffff" stroke="#1f2937" stroke-width="1.4">
+<rect x="100" y="70" width="80" height="30"/>
+<rect x="180" y="70" width="80" height="30"/>
+<rect x="260" y="70" width="80" height="30"/>
+<rect x="340" y="70" width="80" height="30"/>
+<rect x="420" y="70" width="80" height="30"/>
+<rect x="500" y="70" width="80" height="30"/>
+<rect x="580" y="70" width="80" height="30"/>
+<rect x="660" y="70" width="80" height="30"/>
+</g>
+<g font-size="15" text-anchor="middle" fill="#000000">
+<text x="140" y="60">x</text>
+<text x="220" y="60">y</text>
+<text x="300" y="60">[sin]</text>
+<text x="380" y="60">[*]</text>
+<text x="460" y="60">sin(x)</text>
+<text x="540" y="60">x*y</text>
+<text x="620" y="60">[+]</text>
+<text x="700" y="60">f</text>
+</g>
+<g font-size="15" text-anchor="middle" fill="#000000" font-weight="bold">
+<text x="140" y="90">14</text>
+<text x="220" y="90">16</text>
+<text x="300" y="90">9</text>
+<text x="380" y="90">13</text>
+<text x="460" y="90">8</text>
+<text x="540" y="90">12</text>
+<text x="620" y="90">7</text>
+<text x="700" y="90">6</text>
+</g>
+<text x="420" y="124" font-size="14" text-anchor="middle" fill="#1f2937">(a)</text>
+
+<!-- vertices_expandido: 17 posicoes (t = 0..16), largura 44, x = 46 + 44*t -->
+<g stroke="#9ca3af" stroke-width="1.2" fill="#f3f4f6">
+<rect x="46"  y="150" width="44" height="34"/>
+<rect x="90"  y="150" width="44" height="34"/>
+<rect x="134" y="150" width="44" height="34"/>
+<rect x="178" y="150" width="44" height="34"/>
+<rect x="222" y="150" width="44" height="34"/>
+<rect x="266" y="150" width="44" height="34"/>
+<rect x="486" y="150" width="44" height="34"/>
+<rect x="530" y="150" width="44" height="34"/>
+<rect x="706" y="150" width="44" height="34"/>
+</g>
+<g stroke-width="1.4">
+<rect x="310" y="150" width="44" height="34" fill="#dbeafe" stroke="#2563eb"/> <!-- t=6  f      -->
+<rect x="354" y="150" width="44" height="34" fill="#fef3c7" stroke="#d97706"/> <!-- t=7  [+]    -->
+<rect x="398" y="150" width="44" height="34" fill="#dbeafe" stroke="#2563eb"/> <!-- t=8  sin(x) -->
+<rect x="442" y="150" width="44" height="34" fill="#fef3c7" stroke="#d97706"/> <!-- t=9  [sin]  -->
+<rect x="574" y="150" width="44" height="34" fill="#dbeafe" stroke="#2563eb"/> <!-- t=12 x*y    -->
+<rect x="618" y="150" width="44" height="34" fill="#fef3c7" stroke="#d97706"/> <!-- t=13 [*]    -->
+<rect x="662" y="150" width="44" height="34" fill="#dbeafe" stroke="#2563eb"/> <!-- t=14 x      -->
+<rect x="750" y="150" width="44" height="34" fill="#dbeafe" stroke="#2563eb"/> <!-- t=16 y      -->
+</g>
+
+<!-- conteudo (o indice u guardado) -->
+<g font-size="14" text-anchor="middle" fill="#9ca3af">
+<text x="68"  y="172">-1</text>
+<text x="112" y="172">-1</text>
+<text x="156" y="172">-1</text>
+<text x="200" y="172">-1</text>
+<text x="244" y="172">-1</text>
+<text x="288" y="172">-1</text>
+<text x="508" y="172">-1</text>
+<text x="552" y="172">-1</text>
+<text x="728" y="172">-1</text>
+</g>
+<g font-size="15" text-anchor="middle" fill="#000000" font-weight="bold">
+<text x="332" y="172">7</text>
+<text x="376" y="172">6</text>
+<text x="420" y="172">4</text>
+<text x="464" y="172">2</text>
+<text x="596" y="172">5</text>
+<text x="640" y="172">3</text>
+<text x="684" y="172">0</text>
+<text x="772" y="172">1</text>
+</g>
+
+<!-- indices t -->
+<g font-size="12" text-anchor="middle" fill="#6b7280">
+<text x="68"  y="202">0</text>
+<text x="112" y="202">1</text>
+<text x="156" y="202">2</text>
+<text x="200" y="202">3</text>
+<text x="244" y="202">4</text>
+<text x="288" y="202">5</text>
+<text x="332" y="202">6</text>
+<text x="376" y="202">7</text>
+<text x="420" y="202">8</text>
+<text x="464" y="202">9</text>
+<text x="508" y="202">10</text>
+<text x="552" y="202">11</text>
+<text x="596" y="202">12</text>
+<text x="640" y="202">13</text>
+<text x="684" y="202">14</text>
+<text x="728" y="202">15</text>
+<text x="772" y="202">16</text>
+</g>
+<!-- nomes sob as posicoes ocupadas -->
+<g font-size="12" text-anchor="middle" fill="#374151">
+<text x="332" y="218">f</text>
+<text x="376" y="218">[+]</text>
+<text x="420" y="218">sin(x)</text>
+<text x="464" y="218">[sin]</text>
+<text x="596" y="218">x*y</text>
+<text x="640" y="218">[*]</text>
+<text x="684" y="218">x</text>
+<text x="772" y="218">y</text>
+</g>
+<text x="420" y="240" font-size="14" text-anchor="middle" fill="#1f2937">(b)</text>
+
+<!-- resultado: 8 caixas de 80, espaco 14, inicio 51 -->
+<g stroke-width="1.4">
+<rect x="51"  y="264" width="80" height="34" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="145" y="264" width="80" height="34" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="239" y="264" width="80" height="34" rx="6" fill="#fef3c7" stroke="#d97706"/>
+<rect x="333" y="264" width="80" height="34" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="427" y="264" width="80" height="34" rx="6" fill="#fef3c7" stroke="#d97706"/>
+<rect x="521" y="264" width="80" height="34" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="615" y="264" width="80" height="34" rx="6" fill="#fef3c7" stroke="#d97706"/>
+<rect x="709" y="264" width="80" height="34" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+</g>
+<g font-size="14" text-anchor="middle" fill="#000000">
+<text x="91"  y="286">1. y</text>
+<text x="185" y="286">2. x</text>
+<text x="279" y="286">3. [*]</text>
+<text x="373" y="286">4. x*y</text>
+<text x="467" y="286">5. [sin]</text>
+<text x="561" y="286">6. sin(x)</text>
+<text x="655" y="286">7. [+]</text>
+<text x="749" y="286">8. f</text>
+</g>
+<g font-size="11" text-anchor="middle" fill="#6b7280">
+<text x="91"  y="314">t=16</text>
+<text x="185" y="314">t=14</text>
+<text x="279" y="314">t=13</text>
+<text x="373" y="314">t=12</text>
+<text x="467" y="314">t=9</text>
+<text x="561" y="314">t=8</text>
+<text x="655" y="314">t=7</text>
+<text x="749" y="314">t=6</text>
+</g>
+<text x="420" y="338" font-size="14" text-anchor="middle" fill="#1f2937">(c)</text>
+</svg>
