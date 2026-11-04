@@ -10,7 +10,7 @@ typedef struct {
 } aresta_mst;
 
 // algoritmo de kruskal (G nao dirigido)
-// saida: preenche A com as arestas da arvore geradora minima e tam com a quantidade delas (|V| - 1 se G for conexo)
+// saida: preenche A com as arestas da arvore geradora minima e tam com a quantidade delas
 // retorno: peso total da arvore
 double mst_kruskal(const grafo *G, aresta_mst *A, int *tam);
 
