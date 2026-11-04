@@ -112,16 +112,11 @@ static int ler_inteiro_positivo(const char *s, int *x) {
     return 0;
 }
 
-int labirinto_ler_argumentos(int argc, char *argv[], int *linhas, int *colunas, unsigned *semente,
-                             int *desenhar) {
+int labirinto_ler_argumentos(int argc, char *argv[], int *linhas, int *colunas, unsigned *semente) {
     int dim[2], n_dim = 0;
     *semente = (unsigned) time(NULL);
-    *desenhar = 0;
     for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-d") == 0) {
-            // -d: desenha o labirinto
-            *desenhar = 1;
-        } else if (strcmp(argv[i], "-s") == 0) {
+        if (strcmp(argv[i], "-s") == 0) {
             // -s semente: pode aparecer em qualquer posicao
             char *fim;
             if (i + 1 >= argc) {

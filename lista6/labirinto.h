@@ -24,8 +24,7 @@ grafo *labirinto_grafo(const labirinto *L);
 // abre parede (u,v) do labirinto: contabiliza como aresta valida na MST
 void labirinto_abrir(labirinto *L, int u, int v);
 
-int labirinto_ler_argumentos(int argc, char *argv[], int *linhas, int *colunas, unsigned *semente,
-                             int *desenhar);
+int labirinto_ler_argumentos(int argc, char *argv[], int *linhas, int *colunas, unsigned *semente);
 
 // instante atual em segundos (relogio monotonico), para medir intervalos de tempo
 double labirinto_tempo(void);
