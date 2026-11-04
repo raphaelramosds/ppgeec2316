@@ -18,11 +18,13 @@ double mst_kruskal(const grafo *G, aresta_mst *A, int *tam) {
         exit(1);
     }
 
+    // cada vertice vira um conjunto disjunto
     for (int v = 0; v < G->n_vertices; v++) {
         make_set(&S[v]);
     }
 
-    // cria a lista de arestas: cada {u, v} aparece em adj[u] e adj[v], pega apenas u < v
+    // cria a lista de arestas sem repeticao
+    // NOTE: (u,v) aparece em adj[u] e (v, u) em adj[v], entao insere-se o menor (u < v)
     int m = 0;
     for (int u = 0; u < G->n_vertices; u++) {
         for (aresta *a = G->adj[u]; a != NULL; a = a->prox) {
@@ -41,6 +43,8 @@ double mst_kruskal(const grafo *G, aresta_mst *A, int *tam) {
     double total = 0.0;
     *tam = 0;
     for (int i = 0; i < m; i++) {
+        // NOTE: find_set recebe um ponteiro para o node do conjunto disjunto, e nao o indice do vertice
+        // por isso, usamos o indice E[i].u para acessar o node S[E[i].u] e passamos o seu endereco (&)
         if (find_set(&S[E[i].u]) != find_set(&S[E[i].v])) {
             A[(*tam)++] = E[i];
             total += E[i].w;
@@ -55,18 +59,22 @@ double mst_kruskal(const grafo *G, aresta_mst *A, int *tam) {
 
 
 double mst_prim(const grafo *G, int r, int *pi) {
-    double *key = (double*) malloc(G->n_vertices * sizeof(double));
-    if (key == NULL) {
+    // prioridades de cada vertice
+    double *keys = (double*) malloc(G->n_vertices * sizeof(double));
+
+    if (keys == NULL) {
         fprintf(stderr, "Erro de alocacao de memoria.\n");
         exit(1);
     }
     for (int u = 0; u < G->n_vertices; u++) {
-        key[u] = INFINITY;
+        keys[u] = INFINITY;
         pi[u] = -1;
     }
-    key[r] = 0.0;
 
-    heap_min *Q = heap_criar(G->n_vertices, key);
+    // prioridade da raiz eh zero (menor possivel)
+    keys[r] = 0.0;
+
+    heap_min *Q = heap_criar(G->n_vertices, keys);
     for (int u = 0; u < G->n_vertices; u++) {
         heap_inserir(Q, u);
     }
@@ -74,20 +82,21 @@ double mst_prim(const grafo *G, int r, int *pi) {
     double total = 0.0;
     while (!heap_vazio(Q)) {
         int u = heap_extrair_min(Q); // adiciona u a arvore
-        if (key[u] != INFINITY) {
-            total += key[u];
+        if (keys[u] != INFINITY) {
+            total += keys[u];
         }
-        for (aresta *a = G->adj[u]; a != NULL; a = a->prox) { // atualiza as chaves dos vizinhos de u fora da arvore
+        // atualiza as chaves dos vizinhos de u fora da arvore/
+        for (aresta *a = G->adj[u]; a != NULL; a = a->prox) { 
             int v = a->v;
-            if (heap_contem(Q, v) && a->w < key[v]) {
+            if (heap_contem(Q, v) && a->w < keys[v]) {
                 pi[v] = u;
-                key[v] = a->w;
+                keys[v] = a->w;
                 heap_diminuir_chave(Q, v);
             }
         }
     }
 
     heap_liberar(Q);
-    free(key);
+    free(keys);
     return total;
 }
