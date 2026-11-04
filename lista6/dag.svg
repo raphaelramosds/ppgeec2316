@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="330" viewBox="0 70 800 330" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="70" width="800" height="330" fill="#ffffff"/>
+<defs>
+<marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/></marker>
+</defs>
+
+
+<!-- arestas -->
+<g stroke="#1f2937" stroke-width="1.6" fill="none" marker-end="url(#seta)">
+<line x1="110" y1="120" x2="210" y2="120"/>       <!-- x -> [sin] -->
+<line x1="101.2" y1="141.2" x2="220" y2="260"/>   <!-- x -> [*] -->
+<line x1="110" y1="280" x2="210" y2="280"/>       <!-- y -> [*] -->
+<line x1="270" y1="120" x2="358" y2="120"/>       <!-- [sin] -> sin(x) -->
+<line x1="270" y1="280" x2="358" y2="280"/>       <!-- [*] -> x*y -->
+<line x1="433.6" y1="136.8" x2="530" y2="185"/>   <!-- sin(x) -> [+] -->
+<line x1="433.6" y1="263.2" x2="530" y2="215"/>   <!-- x*y -> [+] -->
+<line x1="590" y1="200" x2="690" y2="200"/>       <!-- [+] -> f -->
+</g>
+
+<!-- vertices de valor (elipses) -->
+<g fill="#dbeafe" stroke="#2563eb" stroke-width="1.6">
+<circle cx="80" cy="120" r="30"/>
+<circle cx="80" cy="280" r="30"/>
+<ellipse cx="400" cy="120" rx="42" ry="28"/>
+<ellipse cx="400" cy="280" rx="42" ry="28"/>
+<circle cx="720" cy="200" r="30"/>
+</g>
+
+<!-- vertices de operacao (retangulos) -->
+<g fill="#fef3c7" stroke="#d97706" stroke-width="1.6">
+<rect x="210" y="100" width="60" height="40" rx="6"/>
+<rect x="210" y="260" width="60" height="40" rx="6"/>
+<rect x="530" y="180" width="60" height="40" rx="6"/>
+</g>
+
+<!-- rotulos -->
+<g font-size="16" text-anchor="middle" fill="#000000">
+<text x="80" y="126">x</text>
+<text x="80" y="286">y</text>
+<text x="240" y="126">sin</text>
+<text x="240" y="286">*</text>
+<text x="400" y="126">sin(x)</text>
+<text x="400" y="286">x*y</text>
+<text x="560" y="206">+</text>
+<text x="720" y="206">f</text>
+</g>
+
+<!-- tempos d/f da DFS (vertices percorridos na ordem do enum: X, Y, OP_SIN, OP_MUL, SINX, XY, OP_SOMA, F) -->
+<g font-size="13" text-anchor="middle" fill="#000000">
+<text x="80" y="170">1/14</text>
+<text x="80" y="330">15/16</text>
+<text x="240" y="160">2/9</text>
+<text x="240" y="320">10/13</text>
+<text x="400" y="166">3/8</text>
+<text x="400" y="326">11/12</text>
+<text x="560" y="240">4/7</text>
+<text x="720" y="250">5/6</text>
+</g>
+
+<!-- legenda -->
+<g font-size="13" fill="#000000">
+<circle cx="40" cy="378" r="9" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="56" y="383">valor</text>
+<rect x="110" y="369" width="22" height="18" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.4"/>
+<text x="140" y="383">operacao</text>
+<text x="230" y="383" fill="#000000">d/f = tempos de descoberta / finalizacao da DFS</text>
+</g>
+</svg>

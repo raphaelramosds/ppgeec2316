@@ -23,53 +23,38 @@ void dfs_liberar(dfs_resultado *R) {
     free(R);
 }
 
-// DFS-VISIT(G, u). Se ordem != NULL, cada vertice finalizado eh inserido na frente da lista
-// (aqui, preenchendo o vetor ordem de tras para frente a partir de *k)
-static void dfs_visit(const grafo *G, dfs_resultado *R, int u, int *ordem, int *k) {
-    R->tempo++;                 // u acabou de ser descoberto
+static void dfs_visit(const grafo *G, dfs_resultado *R, int u) {
+    // u acabou de ser descoberto
+    R->tempo++;
     R->d[u] = R->tempo;
     R->cor[u] = CINZA;
-    for (aresta *a = G->adj[u]; a != NULL; a = a->prox) { // explora cada aresta (u, v)
+
+    // explora cada aresta (u, v)
+    for (aresta *a = G->adj[u]; a != NULL; a = a->prox) {
         int v = a->v;
         if (R->cor[v] == BRANCO) {
             R->pi[v] = u;
-            dfs_visit(G, R, v, ordem, k);
-        } else if (R->cor[v] == CINZA) {
-            R->ciclo = 1;       // (u, v) eh aresta de retorno
+            dfs_visit(G, R, v);
         }
     }
+
+    // u finalizado
     R->tempo++;
     R->f[u] = R->tempo;
-    R->cor[u] = PRETO;          // u finalizado
-    if (ordem != NULL) {
-        ordem[--(*k)] = u;
-    }
+    R->cor[u] = PRETO;
 }
 
-static dfs_resultado *dfs_ordem(const grafo *G, int *ordem) {
+dfs_resultado *dfs(const grafo *G) {
     dfs_resultado *R = dfs_alocar(G->n_vertices);
     for (int u = 0; u < G->n_vertices; u++) {
         R->cor[u] = BRANCO;
         R->pi[u] = -1;
     }
     R->tempo = 0;
-    R->ciclo = 0;
-    int k = G->n_vertices;
     for (int u = 0; u < G->n_vertices; u++) {
         if (R->cor[u] == BRANCO) {
-            dfs_visit(G, R, u, ordem, &k);
+            dfs_visit(G, R, u);
         }
     }
     return R;
-}
-
-dfs_resultado *dfs(const grafo *G) {
-    return dfs_ordem(G, NULL);
-}
-
-int ordenacao_topologica(const grafo *G, int *ordem) {
-    dfs_resultado *R = dfs_ordem(G, ordem);
-    int ciclo = R->ciclo;
-    dfs_liberar(R);
-    return ciclo ? -1 : 0;
 }
