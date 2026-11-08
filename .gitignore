@@ -8,3 +8,4 @@ test_hash_remove_insert
 test_hash_sondagem_tempo
 test_hash_sondagem_colisoes
 *_main
+*.out
