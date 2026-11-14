@@ -1,7 +1,6 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "pascalops.h"
 
 // indexacao row-major: i * N_COLUNAS + j
 #define EL(m, n, i, j) ((m)[(size_t)(i) * (n) + (j)])
@@ -40,9 +39,7 @@ static void _multm_recursivo(const double *a, const double *b, double *c, int ld
 // NOTE: inicializar double *c com zeros
 void multm_recursivo(const double *a, const double *b, double *c, int n)
 {
-    pascal_start(1);
     _multm_recursivo(a, b, c, n, 0, 0, 0, 0, 0, 0, n);
-    pascal_stop(1);
 }
 
 int main(int argc, char **argv)
