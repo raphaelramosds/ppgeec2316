@@ -25,14 +25,21 @@ static void multm_seq(const double *a, const double *b, double *c, int ld,
 
     int meio = n / 2;
 
-    multm_seq(a, b, c, ld, linha_a, col_a, linha_b, col_b, linha_c, col_c, meio);
-    multm_seq(a, b, c, ld, linha_a, col_a + meio, linha_b + meio, col_b, linha_c, col_c, meio);
-    multm_seq(a, b, c, ld, linha_a, col_a, linha_b, col_b + meio, linha_c, col_c + meio, meio);
-    multm_seq(a, b, c, ld, linha_a, col_a + meio, linha_b + meio, col_b + meio, linha_c, col_c + meio, meio);
-    multm_seq(a, b, c, ld, linha_a + meio, col_a, linha_b, col_b, linha_c + meio, col_c, meio);
-    multm_seq(a, b, c, ld, linha_a + meio, col_a + meio, linha_b + meio, col_b, linha_c + meio, col_c, meio);
-    multm_seq(a, b, c, ld, linha_a + meio, col_a, linha_b, col_b + meio, linha_c + meio, col_c + meio, meio);
-    multm_seq(a, b, c, ld, linha_a + meio, col_a + meio, linha_b + meio, col_b + meio, linha_c + meio, col_c + meio, meio);
+    // c11 = A11*B11 + A12*B21
+    multm_seq(a, b, c, ld, linha_a, col_a, linha_b, col_b, linha_c, col_c, meio);               // A11*B11
+    multm_seq(a, b, c, ld, linha_a, col_a + meio, linha_b + meio, col_b, linha_c, col_c, meio); // A12*B21
+
+    // c12 = A11*B12 + A12*B22
+    multm_seq(a, b, c, ld, linha_a, col_a, linha_b, col_b + meio, linha_c, col_c + meio, meio);               // A11*B12
+    multm_seq(a, b, c, ld, linha_a, col_a + meio, linha_b + meio, col_b + meio, linha_c, col_c + meio, meio); // A12*B22
+
+    // c21 = A21*B11 + A22*B21
+    multm_seq(a, b, c, ld, linha_a + meio, col_a, linha_b, col_b, linha_c + meio, col_c, meio);               // A21*B11
+    multm_seq(a, b, c, ld, linha_a + meio, col_a + meio, linha_b + meio, col_b, linha_c + meio, col_c, meio); // A22*B21
+
+    // c22 = A21*B12 + A22*B22
+    multm_seq(a, b, c, ld, linha_a + meio, col_a, linha_b, col_b + meio, linha_c + meio, col_c + meio, meio);               // A21*B12
+    multm_seq(a, b, c, ld, linha_a + meio, col_a + meio, linha_b + meio, col_b + meio, linha_c + meio, col_c + meio, meio); // A22*B22
 }
 
 static void _multm_recursivo(const double *a, const double *b, double *c, int ld,
