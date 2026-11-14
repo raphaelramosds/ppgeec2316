@@ -10,6 +10,6 @@
 
 pascalanalyzer -g -t man \
     -c 1,2,4,8,16 \
-    -i 256,512,1024,2048 \
+    -i 256,512,1024,2048,4096 \
     -o pmultm_main_g.json \
     ./pmultm_main.out
