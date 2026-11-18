@@ -14,7 +14,7 @@ Resoluções das listas de exercícios da disciplina, com implementações próp
 
 ---
 
-## Lista 1 — Fundamentos e ordenação
+## [![lista1](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)](lista1/) Lista 1 — Fundamentos e ordenação
 
 Experimentos em [`lista1/Lista1-Experimentos.ipynb`](lista1/Lista1-Experimentos.ipynb).
 
@@ -27,7 +27,7 @@ Experimentos em [`lista1/Lista1-Experimentos.ipynb`](lista1/Lista1-Experimentos.
 | `sorting.py` | `insertion_sort`, `merge_sort` |
 | `ram.py` | `insertion_sort_ram`: insertion sort que conta as operações do modelo RAM |
 
-## Lista 2 — Divisão e conquista e recorrências
+## [![lista2](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)](lista2/) Lista 2 — Divisão e conquista e recorrências
 
 Experimentos em [`lista2/Lista2-Experimentos.ipynb`](lista2/Lista2-Experimentos.ipynb).
 
@@ -42,7 +42,7 @@ Experimentos em [`lista2/Lista2-Experimentos.ipynb`](lista2/Lista2-Experimentos.
 | `buscalinear.py` | Busca linear recursiva (usada na análise de recorrência) |
 | `trabalhadores.py` | `permutar` (Fisher–Yates) e `distribuir` (simula os trabalhadores com `sleep`) |
 
-## Lista 3 — Heaps, quicksort e ordenação linear
+## [![lista3](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)](lista3/) Lista 3 — Heaps, quicksort e ordenação linear
 
 Experimentos em [`lista3/Lista3-Experimentos.ipynb`](lista3/Lista3-Experimentos.ipynb).
 
@@ -60,7 +60,7 @@ Experimentos em [`lista3/Lista3-Experimentos.ipynb`](lista3/Lista3-Experimentos.
 | `FastMarchingMethod.md` | Explicação didática do FMM |
 | `SolucaoDiscretaEikonal.md` | Dedução da solução discreta da equação Eikonal |
 
-## Lista 4 — Estatísticas de ordem
+## [![lista4](https://img.shields.io/badge/C-A8B9CC?logo=c&logoColor=white)](lista4/) Lista 4 — Estatísticas de ordem
 
 Compilação: `cd lista4 && make` (para outra otimização, use `OPT=-O0 make`).
 
@@ -75,7 +75,7 @@ Compilação: `cd lista4 && make` (para outra otimização, use `OPT=-O0 make`).
 | `minmax_main` | Benchmark de mínimo e máximo (`minmax.h`; há uma versão em Python em `minmax.py`) |
 | `postoffice_main` | Agência postal com mediana ponderada (`weighted_median.h`) |
 
-## Lista 5 — Estruturas de dados e tabelas hash
+## [![lista5](https://img.shields.io/badge/C-A8B9CC?logo=c&logoColor=white)](lista5/) Lista 5 — Estruturas de dados e tabelas hash
 
 Compilação: `cd lista5 && make`. Detalhes e resultados em [`lista5/README.md`](lista5/README.md).
 
@@ -89,7 +89,7 @@ Compilação: `cd lista5 && make`. Detalhes e resultados em [`lista5/README.md`]
 | `test_hash_search` / `_insert` / `_remove` / `_remove_insert` | Q14: `hash_encadeamento.c` × `hash_aberto.c` |
 | `test_hash_sondagem_tempo` / `_colisoes` | Q15: tempo com tabela grande e chaves que colidem em h1 |
 
-## Lista 6 — Grafos
+## [![lista6](https://img.shields.io/badge/C-A8B9CC?logo=c&logoColor=white)](lista6/) Lista 6 — Grafos
 
 Compilação: `cd lista6 && make`. Os enunciados estão em [`lista6/README.md`](lista6/README.md).
 
@@ -104,7 +104,7 @@ Biblioteca comum: `grafo.c` (lista de adjacência), `dfs.c`, `heap.c` (heap mín
 
 As figuras (`dag.svg`, `labirinto_3x3.svg`, `rede_neural_indexacao.svg`, `topologia_ospf.jpg` etc.) ilustram os grafos usados.
 
-## Lista 7 — Paralelismo com OpenMP
+## [![lista7](https://img.shields.io/badge/C-A8B9CC?logo=c&logoColor=white)](lista7/) Lista 7 — Paralelismo com OpenMP
 
 Compilação: `cd lista7 && make` (requer `-fopenmp` e a biblioteca `mpascalops`). Os enunciados estão em [`lista7/README.md`](lista7/README.md).
 
