@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "cache.h"
+#include "cache_lru.h"
 
 // Criar bloco com identificador e timestamp
 static Block *create_block(int id, int ts) {
@@ -7,22 +7,23 @@ static Block *create_block(int id, int ts) {
     if (!b) exit(EXIT_FAILURE);
     b->id = id;
     b->ts = ts;
+    b->mark = 0;
     b->next = NULL;
     return b;
 }
 
-void evict(Cache *c) {
+void lru_evict(Cache *c) {
     if (c == NULL || c->head == NULL) return;
 
     Block *prev = NULL;
     Block *curr = c->head;
 
-    // mantem a referencia do node com menor ts (min_node) e do seu anterior (min_prev)
+    // mantem a referencia do node com menor ts, ou seja, o acessado ha mais tempo (min_node) e do seu anterior (min_prev)
     Block *min_prev = NULL;
     Block *min_node = c->head;
 
     while (curr != NULL) {
-        // procure o bloco menos utilizado (o que possuir menor timestamp)
+        // procure o bloco usado menos recentemente (o que possuir menor timestamp)
         if (curr->ts < min_node->ts) {
             min_node = curr;
             min_prev = prev;
@@ -46,12 +47,15 @@ void evict(Cache *c) {
     c->size -= 1;
 }
 
-int get_block(Cache *c, int block_id) {
+int lru_get_block(Cache *c, int block_id) {
+    // avanca o relogio logico: ts de um bloco = instante do seu ultimo acesso
+    c->clock += 1;
+
     Block *curr = c->head;
     while (curr != NULL) {
         if (curr->id == block_id) {
-            // cache hit
-            curr->ts += 1;
+            // cache hit: o bloco passa a ser o usado mais recentemente
+            curr->ts = c->clock;
             return 1;
         }
         curr = curr->next;
@@ -64,10 +68,10 @@ int get_block(Cache *c, int block_id) {
     }
 
     if (c->size >= c->capacity) {
-        evict(c);
+        lru_evict(c);
     }
 
-    Block *novo = create_block(block_id, 1);
+    Block *novo = create_block(block_id, c->clock);
     novo->next = c->head;
     c->head = novo;
     c->size += 1;

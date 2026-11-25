@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "cache.h"
+#include "cache_lru.h"
 
 static void gerar_requisicoes(int *req, int n, int k) {
     int idx = 0;
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
         return 1;
     }
     for (int t = 0; t < n; t++) {
-        get_block(c, req[t]);
+        lru_get_block(c, req[t]);
     }
     int misses_lru = c->misses;
 

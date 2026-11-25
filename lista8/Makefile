@@ -4,30 +4,31 @@ CC=gcc
 CFLAGS=-O0 -g -fno-stack-protector -fopenmp --std=gnu99
 
 # dimensao das matrizes usada no traco (potencia de 2)
-N ?= 8
+N ?= 16
 
 # arquivos de saida do traco de memoria
 #   RAW   traco completo do lackey (loader, libc, init, ...)
 #   TRACE apenas a regiao entre TRACE_BEGIN e TRACE_END (I/L/S/M)
-#   DATA  apenas acessos de dados as matrizes A, B e C (sem I e sem pilha 1ff...)
+#   DATA  enderecos (um por linha) das leituras L e M das matrizes A, B e C (sem I/S e sem pilha 1ff...)
 TRACE ?= multm_n$(N).trace
 RAW   ?= $(TRACE:.trace=.raw.trace)
 DATA  ?= $(TRACE:.trace=.data.trace)
 
 TARGETS= \
 	multm_main.out \
-	lru_main.out
+	lru_main.out \
+	lru_random_main.out
 
 %.out: %.c
 	$(CC) $< -o $@ $(CFLAGS)
 
 all: $(TARGETS)
 
-lru_main.out: lru_main.c cache_lru.c cache.h
+lru_main.out: lru_main.c cache_lru.c cache_lru.h cache.h
 	$(CC) lru_main.c cache_lru.c -o $@ $(CFLAGS)
 
-# atalho: make lru-main
-lru-main: lru_main.out
+lru_random_main.out: lru_random_main.c cache_lru.c cache_lru.h cache_random.c cache_random.h cache.h
+	$(CC) lru_random_main.c cache_lru.c cache_random.c -o $@ $(CFLAGS)
 
 # extrai o traco de memoria com o lackey do valgrind e recorta a regiao
 # delimitada por VALGRIND_PRINTF("TRACE_BEGIN") / VALGRIND_PRINTF("TRACE_END")
@@ -41,11 +42,12 @@ lru-main: lru_main.out
 trace-multm: multm_main.out
 	valgrind --tool=lackey --trace-mem=yes --log-file=$(RAW) ./multm_main.out $(N)
 	sed -n '/TRACE_BEGIN/,/TRACE_END/{/TRACE_/d;p}' $(RAW) > $(TRACE)
-# mantem apenas L/S/M (linhas de dados comecam com espaco) e descarta
-# a pilha (enderecos 1ff...), restando os acessos as matrizes A, B e C
-	grep -E '^ [LSM] ' $(TRACE) | grep -v ' 1ff' > $(DATA)
+# mantem apenas as leituras L e M (linhas de dados comecam com espaco) e descarta
+# a pilha das chamadas recursivas (enderecos 1ff...), restando as leituras das matrizes A, B e C
+# e extrai apenas o endereco hex de cada linha (sem o tipo e sem ",<bytes>")
+	grep -E '^ [LM] ' $(TRACE) | grep -v ' 1ff' | sed -E 's/^ [LM] ([0-9a-fA-F]+),[0-9]+$$/\1/' > $(DATA)
 
 clean:
 	rm -f $(TARGETS) *.trace
 
-.PHONY: all clean trace-multm lru-main
+.PHONY: all clean trace-multm

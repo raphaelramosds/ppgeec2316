@@ -7,6 +7,7 @@
 typedef struct block {
     int id;
     int ts;
+    int mark;       // 0 ou 1
     struct block *next;
 } Block;
 
@@ -15,6 +16,7 @@ typedef struct cache {
     int size;       // numero de blocos inseridos
     int capacity;   // tamanho maximo (k)
     int misses;
+    int clock;      // relogio logico: incrementado a cada acesso ao cache
 } Cache;
 
 // Aloca e inicializa um cache vazio com capacidade k
@@ -26,6 +28,7 @@ static inline Cache *init_cache(int capacity) {
     c->size = 0;
     c->capacity = capacity;
     c->misses = 0;
+    c->clock = 0;
     return c;
 }
 
@@ -40,14 +43,5 @@ static inline void free_cache(Cache *c) {
     }
     free(c);
 }
-
-// Aplica alguma politica de remocao de blocos no cache
-void evict(Cache *c);
-
-// Busca o bloco block_id no cache
-// Funcionamento: 
-//  - Se encontrado (hit): incrementa ts desse bloco e retorna 1
-//  - Se nao encontrado (miss): incrementa misses e retorna 0. E se houver espaço livre, insere o bloco com ts = 1, caso contrario, chama evict(c) antes de inserir
-int get_block(Cache *c, int block_id);
 
 #endif
